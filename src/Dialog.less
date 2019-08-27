@@ -1,0 +1,28 @@
+@import "./zr.variables.less";
+.zr-dialog{
+    background-color: #FFF;
+    .dialog-header{
+        height: 40px;
+        line-height: 40px;
+        color: #777070;
+        font-weight: bold;
+        text-align: left;
+        padding: 0px 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+        box-shadow: 0 1px 3px 0 rgba(0,37,55,.05);
+    }
+    .dialog-body{
+        padding: 4px;
+    }
+
+    &.fixed{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        max-height: 480px;
+        .dialog-body{
+            flex: 1;
+            overflow: auto;
+        }
+    }
+}
