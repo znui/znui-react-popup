@@ -1,6 +1,5 @@
 require('./Alert.less');
 var React = require('react');
-
 var Alert = React.createClass({
 	displayName:'Alert',
 	getDefaultProps: function (){
@@ -38,58 +37,40 @@ var Alert = React.createClass({
 });
 
 znui.react.alert = function (content, title, callback, props){
-	znui.react.modal.open(<Alert content={content} title={title} onClick={callback} {...props} />, {
-		showOverlay: true,
-		contentStyles: function (dom, modal){
-			return {
-				"margin-top": -(dom.offsetHeight/2)+'px',
-				"margin-left": -(dom.offsetWidth/2)+'px'
-			};
-		}
+	znui.react.modal.create(<Alert content={content} title={title} onClick={callback} {...props} />, {
+		class: 'modal-middle modal-overlay'
 	});
 };
 
 znui.react.confirm = function (content, title, confirm, cancel, options){
 	var _options = zn.extend({ cancel: '取消', confirm: '确定' }, options);
 	znui.react.modal.open(<Alert
-			content={content}
-			title={title}
-			buttons={[
-				{ text: _options.cancel, onClick: cancel },
-				{ text: _options.confirm, onClick: confirm }
-			]} />, {
-				showOverlay: true,
-				contentStyles: function (dom, modal){
-					return {
-						"margin-top": -(dom.offsetHeight/2)+'px',
-						"margin-left": -(dom.offsetWidth/2)+'px'
-					};
-				}
-			});
+		content={content}
+		title={title}
+		buttons={[
+			{ text: _options.cancel, onClick: cancel },
+			{ text: _options.confirm, onClick: confirm }
+		]} />, {
+			class: 'modal-middle modal-overlay'
+		});
 };
 
 znui.react.prompt = function (title, confirm, cancel){
 	var _input = <input className="alert-input" type="text" />;
 	znui.react.modal.open(<Alert
-			content={_input}
-			title={title}
-			buttons={[
-				{ text:'取消', onClick: cancel },
-				{
-					text:'确定',
-					onClick: function (item, index, alert){
-						confirm && confirm(alert.props.content, item, index, alert);
-					}
+		content={_input}
+		title={title}
+		buttons={[
+			{ text:'取消', onClick: cancel },
+			{
+				text:'确定',
+				onClick: function (item, index, alert){
+					confirm && confirm(alert.props.content, item, index, alert);
 				}
-			]} />, {
-				showOverlay: true,
-				contentStyles: function (dom, modal){
-					return {
-						"margin-top": -(dom.offsetHeight/2)+'px',
-						"margin-left": -(dom.offsetWidth/2)+'px'
-					};
-				}
-			});
+			}
+		]} />, {
+			class: 'modal-middle modal-overlay'
+		});
 };
 
 module.exports = Alert;

@@ -24,7 +24,9 @@ var Dialog = React.createClass({
 });
 
 znui.react.dialog = function (argv){
-	return znui.react.modal.middle(<Dialog {...argv} />);
+	return znui.react.modal.create(<Dialog {...argv} />, {
+		class: 'modal-middle modal-overlay'
+	});
 };
 
 module.exports = Dialog;

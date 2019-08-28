@@ -47,9 +47,7 @@ module.exports = znui.react.notification = zn.Class({
 			this._dom = zn.dom.createRootElement("div", { class: 'zr-notification-container' });
 		},
 		open: function (type, content, delay){
-			var _dom = document.createElement('div');
-			ReactDOM.render(<Notification type={type} content={content} delay={delay} />, _dom);
-			this._dom.appendChild(_dom);
+			ReactDOM.render(<Notification type={type} content={content} delay={delay} />, zn.dom.createElement('div', {}, this._dom));
 		},
 		success: function (content, delay){
 			return this.open('success', content, delay);
