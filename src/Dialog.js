@@ -1,7 +1,8 @@
 require('./Dialog.less');
 var React = require('react');
+var ReactDOM = require('react-dom');
 
-var Dialog = React.createClass({
+var Dialog = znui.react.createClass({
 	displayName:'Dialog',
 	getDefaultProps: function (){
 		return {
@@ -11,7 +12,7 @@ var Dialog = React.createClass({
 	},
 	render: function(){
 		return (
-			<div className={znui.classname('zr-dialog', this.props.className)} style={this.props.style} >
+			<div className={znui.react.classname('zr-dialog', this.props.className)} style={this.props.style} >
 				<div className="dialog-header">
 					{this.props.title && <div className="dialog-title">{this.props.title}</div>}
 				</div>

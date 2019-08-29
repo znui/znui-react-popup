@@ -11,7 +11,7 @@ var TYPE_ICONS = {
 	info: 'fa-info'
 }
 
-var Notification = React.createClass({
+var Notification = znui.react.createClass({
 	displayName:'Notification',
 	componentDidMount: function (){
 		window.setTimeout(this.out, this.props.delay || 1500);
