@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-require('znui-react/index.all.js');
+require('../../znui-react/index.all.js');
 require('../src/index.js');
 require('./index.less');
 ReactDOM.render(
@@ -9,14 +9,15 @@ ReactDOM.render(
     </div>,
     document.getElementById('container'),
 );
-/*
+
+
 var _modal = znui.react.modal.create(<div style={{width: 100, height: 100, backgroundColor: '#AAA'}}>
     A
 </div>, {
     class: 'modal-middle modal-overlay',
     
 });
-
+/*
 var _modal = znui.react.modal.create(<div style={{width: 100, height: 100, backgroundColor: '#ddd'}}>
     B
 </div>, {

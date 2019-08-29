@@ -2,7 +2,7 @@ require('./Toast.less');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Toast = znui.react.createClass({
+var Toast = React.createClass({
 	displayName:'Toast',
 	componentDidMount: function (){
 		window.setTimeout(this.out, this.props.delay || 1500);

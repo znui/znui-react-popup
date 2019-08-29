@@ -2,7 +2,7 @@ require('./Modal.less');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Modal = znui.react.createClass({
+var Modal = React.createClass({
 	displayName:'Modal',
 	destroy: function (){
 		var _dom = ReactDOM.findDOMNode(this);

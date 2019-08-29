@@ -2,7 +2,7 @@ require('./Dialog.less');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Dialog = znui.react.createClass({
+var Dialog = React.createClass({
 	displayName:'Dialog',
 	getDefaultProps: function (){
 		return {
