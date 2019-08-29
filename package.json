@@ -1,6 +1,6 @@
 {
   "name": "znui-react-popup",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Web popup component.",
   "main": "index.all.js",
   "scripts": {
@@ -24,6 +24,6 @@
   "email": "xuyy0618@qq.com",
   "license": "MIT",
   "dependencies": {
-    "znui-react": "^1.0.8"
+    "znui-react": "^1.0.9"
   }
 }
