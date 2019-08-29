@@ -1,12 +1,7 @@
 require('./Loader.less');
 var React = require('react');
-var ReactDOM = require('react-dom');
 
-if(React && !React.createClass) {
-    React.createClass = require('create-react-class');
-}
-
-var Loader = React.createClass({
+var Loader = znui.react.createClass({
 	displayName:'Preloader',
 	getDefaultProps: function (){
 		return {

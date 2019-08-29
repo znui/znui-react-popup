@@ -2,10 +2,6 @@ require('./Notification.less');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-if(React && !React.createClass) {
-    React.createClass = require('create-react-class');
-}
-
 var TYPE_ICONS = {
 	heart: 'fa-heart',
 	secondary: 'fa-comment',
@@ -15,7 +11,7 @@ var TYPE_ICONS = {
 	info: 'fa-info'
 }
 
-var Notification = React.createClass({
+var Notification = znui.react.createClass({
 	displayName:'Notification',
 	componentDidMount: function (){
 		window.setTimeout(this.out, this.props.delay || 1500);

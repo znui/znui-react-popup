@@ -1,10 +1,7 @@
 require('./Alert.less');
 var React = require('react');
-var ReactDOM = require('react-dom');
-if(React && !React.createClass) {
-    React.createClass = require('create-react-class');
-}
-var Alert = React.createClass({
+
+var Alert = znui.react.createClass({
 	displayName:'Alert',
 	getDefaultProps: function (){
 		return {

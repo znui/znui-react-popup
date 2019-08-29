@@ -2,11 +2,7 @@ require('./Tooltip.less');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-if(React && !React.createClass) {
-    React.createClass = require('create-react-class');
-}
-
-var Tooltip = React.createClass({
+var Tooltip = znui.react.createClass({
 	displayName:'Tooltip',
 	getInitialState: function (){
 		return {
