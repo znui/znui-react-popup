@@ -2170,6 +2170,10 @@ var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
 
+if (React && !React.createClass) {
+  React.createClass = __webpack_require__(21);
+}
+
 var Alert = React.createClass({
   displayName: 'Alert',
   getDefaultProps: function getDefaultProps() {
@@ -2287,6 +2291,10 @@ var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
 
+if (React && !React.createClass) {
+  React.createClass = __webpack_require__(21);
+}
+
 var Dialog = React.createClass({
   displayName: 'Dialog',
   getDefaultProps: function getDefaultProps() {
@@ -2332,6 +2340,10 @@ __webpack_require__(30);
 var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
+
+if (React && !React.createClass) {
+  React.createClass = __webpack_require__(21);
+}
 
 var Loader = React.createClass({
   displayName: 'Preloader',
@@ -2394,6 +2406,10 @@ __webpack_require__(32);
 var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
+
+if (React && !React.createClass) {
+  React.createClass = __webpack_require__(21);
+}
 
 var Modal = React.createClass({
   displayName: 'Modal',
@@ -2470,6 +2486,10 @@ __webpack_require__(34);
 var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
+
+if (React && !React.createClass) {
+  React.createClass = __webpack_require__(21);
+}
 
 var TYPE_ICONS = {
   heart: 'fa-heart',
@@ -2557,6 +2577,10 @@ __webpack_require__(36);
 var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
+
+if (React && !React.createClass) {
+  React.createClass = __webpack_require__(21);
+}
 
 var Popover = React.createClass({
   displayName: 'Popover',
@@ -2734,6 +2758,10 @@ var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
 
+if (React && !React.createClass) {
+  React.createClass = __webpack_require__(21);
+}
+
 var Toast = React.createClass({
   displayName: 'Toast',
   componentDidMount: function componentDidMount() {
@@ -2805,6 +2833,10 @@ __webpack_require__(40);
 var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
+
+if (React && !React.createClass) {
+  React.createClass = __webpack_require__(21);
+}
 
 var Tooltip = React.createClass({
   displayName: 'Tooltip',

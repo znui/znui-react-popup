@@ -2,6 +2,10 @@ require('./Notification.less');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+if(React && !React.createClass) {
+    React.createClass = require('create-react-class');
+}
+
 var TYPE_ICONS = {
 	heart: 'fa-heart',
 	secondary: 'fa-comment',
