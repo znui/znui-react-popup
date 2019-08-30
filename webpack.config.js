@@ -21,10 +21,11 @@ module.exports = {
     entry: {
         "index": "./index.js"
     },
+    /*
     externals: {
         "react": "React",
         "react-dom": "ReactDOM"
-    },
+    },*/
     output: {
         path: path.join(process.cwd(), 'dist'),
         //chunkFilename: '[name].js',
