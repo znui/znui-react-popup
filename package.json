@@ -24,6 +24,6 @@
   "email": "xuyy0618@qq.com",
   "license": "MIT",
   "dependencies": {
-    "znui-react": "^1.1.0"
+    "znui-react": "^1.1.1"
   }
 }
