@@ -12,14 +12,33 @@ ReactDOM.render(
     document.getElementById('container'),
 );
 
+znui.react.dialog({
+    title: 'xx',
+    closeable: true,
+    content: <form className="role-form">
+        <div className="form-item"><span className="title">Display Name: </span><input name="displayName" type="text" /></div>
+        <div className="form-btn" onClick={(event)=>this.__submitUpdateRole(event, value.name)}>Update Role DisplayName</div>
+    </form>
+})
 
+znui.react.dialog({
+    title: 'xxbbbb',
+    closeable: true,
+    content: <form className="role-form">
+        <div className="form-item"><span className="title">Display Name: </span><input name="displayName" type="text" /></div>
+        <div className="form-btn" onClick={(event)=>this.__submitUpdateRole(event, value.name)}>Update Role DisplayName</div>
+    </form>
+})
+
+
+/*
 var _modal = znui.react.modal.create(<div style={{width: 100, height: 100, backgroundColor: '#AAA'}}>
     A
 </div>, {
     class: 'modal-middle modal-overlay',
     
 });
-/*
+
 var _modal = znui.react.modal.create(<div style={{width: 100, height: 100, backgroundColor: '#ddd'}}>
     B
 </div>, {

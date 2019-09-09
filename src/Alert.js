@@ -45,7 +45,7 @@ znui.react.alert = function (content, title, callback, props){
 
 znui.react.confirm = function (content, title, confirm, cancel, options){
 	var _options = zn.extend({ cancel: '取消', confirm: '确定' }, options);
-	znui.react.modal.open(<Alert
+	znui.react.modal.create(<Alert
 		content={content}
 		title={title}
 		buttons={[
@@ -58,7 +58,7 @@ znui.react.confirm = function (content, title, confirm, cancel, options){
 
 znui.react.prompt = function (title, confirm, cancel){
 	var _input = <input className="alert-input" type="text" />;
-	znui.react.modal.open(<Alert
+	znui.react.modal.create(<Alert
 		content={_input}
 		title={title}
 		buttons={[

@@ -5,14 +5,24 @@ var Loader = znui.react.createClass({
 	displayName:'Preloader',
 	getDefaultProps: function (){
 		return {
+			content: null,
 			title: 'Loading ... '
+		}
+	},
+	__renderContent: function (){
+		if(this.props.content){
+			return this.props.content;
+		}else if(this.props.title){
+			return <>
+				<i className="fa fa-spinner zr-self-loading" />
+				<span className="title">{this.props.title}</span>
+			</>;
 		}
 	},
 	render: function(){
 		return (
 			<div className={znui.react.classname('zr-loader', this.props.className)} >
-				<i className="fa fa-spinner zr-self-loading" />
-				<span>{this.props.content||this.props.title}</span>
+				{this.__renderContent()}
 			</div>
 		);
 	}

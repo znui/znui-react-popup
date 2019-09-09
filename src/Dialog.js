@@ -9,11 +9,15 @@ var Dialog = znui.react.createClass({
 			content: null
 		};
 	},
+	__onClose: function (){
+		znui.react.modal.close();
+	},
 	render: function(){
 		return (
 			<div className={znui.react.classname('zr-dialog', this.props.className)} style={this.props.style} >
 				<div className="dialog-header">
 					{this.props.title && <div className="dialog-title">{this.props.title}</div>}
+					{this.props.closeable && <span onClick={this.__onClose} className="dialog-close">x</span>}
 				</div>
 				<div className="dialog-body">
 					{this.props.content}

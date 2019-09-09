@@ -231,6 +231,8 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _this = this;
+
 var React = __webpack_require__(0);
 
 var ReactDOM = __webpack_require__(1);
@@ -248,17 +250,52 @@ __webpack_require__(41);
 ReactDOM.render(React.createElement("div", null, React.createElement("input", {
   type: "text"
 })), document.getElementById('container'));
-
-var _modal = znui.react.modal.create(React.createElement("div", {
-  style: {
-    width: 100,
-    height: 100,
-    backgroundColor: '#AAA'
-  }
-}, "A"), {
-  "class": 'modal-middle modal-overlay'
+znui.react.dialog({
+  title: 'xx',
+  closeable: true,
+  content: React.createElement("form", {
+    className: "role-form"
+  }, React.createElement("div", {
+    className: "form-item"
+  }, React.createElement("span", {
+    className: "title"
+  }, "Display Name: "), React.createElement("input", {
+    name: "displayName",
+    type: "text"
+  })), React.createElement("div", {
+    className: "form-btn",
+    onClick: function onClick(event) {
+      return _this.__submitUpdateRole(event, value.name);
+    }
+  }, "Update Role DisplayName"))
+});
+znui.react.dialog({
+  title: 'xxbbbb',
+  closeable: true,
+  content: React.createElement("form", {
+    className: "role-form"
+  }, React.createElement("div", {
+    className: "form-item"
+  }, React.createElement("span", {
+    className: "title"
+  }, "Display Name: "), React.createElement("input", {
+    name: "displayName",
+    type: "text"
+  })), React.createElement("div", {
+    className: "form-btn",
+    onClick: function onClick(event) {
+      return _this.__submitUpdateRole(event, value.name);
+    }
+  }, "Update Role DisplayName"))
 });
 /*
+var _modal = znui.react.modal.create(<div style={{width: 100, height: 100, backgroundColor: '#AAA'}}>
+    A
+</div>, {
+    class: 'modal-middle modal-overlay',
+    
+});
+
 var _modal = znui.react.modal.create(<div style={{width: 100, height: 100, backgroundColor: '#ddd'}}>
     B
 </div>, {
@@ -1937,7 +1974,7 @@ module.exports = __webpack_require__(21);
     },
     createClass: function t(e) {
       if (this.React) {
-        return this.React.createClass(e);
+        return this.React.createClass.call(this.React, e);
       } else {
         var n = r(0);
 
@@ -1947,7 +1984,7 @@ module.exports = __webpack_require__(21);
           }
 
           if (n.createClass) {
-            return n.createClass(e);
+            return n.createClass.call(n, e);
           } else {
             throw new Error("create-react-class is not exist.");
           }
@@ -2781,6 +2818,9 @@ var Dialog = znui.react.createClass({
       content: null
     };
   },
+  __onClose: function __onClose() {
+    znui.react.modal.close();
+  },
   render: function render() {
     return React.createElement("div", {
       className: znui.react.classname('zr-dialog', this.props.className),
@@ -2789,7 +2829,10 @@ var Dialog = znui.react.createClass({
       className: "dialog-header"
     }, this.props.title && React.createElement("div", {
       className: "dialog-title"
-    }, this.props.title)), React.createElement("div", {
+    }, this.props.title), this.props.closeable && React.createElement("span", {
+      onClick: this.__onClose,
+      className: "dialog-close"
+    }, "x")), React.createElement("div", {
       className: "dialog-body"
     }, this.props.content));
   }
@@ -2821,15 +2864,25 @@ var Loader = znui.react.createClass({
   displayName: 'Preloader',
   getDefaultProps: function getDefaultProps() {
     return {
+      content: null,
       title: 'Loading ... '
     };
+  },
+  __renderContent: function __renderContent() {
+    if (this.props.content) {
+      return this.props.content;
+    } else if (this.props.title) {
+      return React.createElement(React.Fragment, null, React.createElement("i", {
+        className: "fa fa-spinner zr-self-loading"
+      }), React.createElement("span", {
+        className: "title"
+      }, this.props.title));
+    }
   },
   render: function render() {
     return React.createElement("div", {
       className: znui.react.classname('zr-loader', this.props.className)
-    }, React.createElement("i", {
-      className: "fa fa-spinner zr-self-loading"
-    }), React.createElement("span", null, this.props.content || this.props.title));
+    }, this.__renderContent());
   }
 });
 module.exports = znui.react.loader = zn.Class({
