@@ -21,4 +21,35 @@
         /*background: linear-gradient(to right, #904e95, #e96443);*/ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         
     }
+
+    .loader-self-loading{
+        -webkit-animation: RTSelfLoading 1.5s infinite linear;
+        -moz-animation: RTSelfLoading 1.5s infinite linear;
+        -ms-animation: RTSelfLoading 1.5s infinite linear;
+        animation: RTSelfLoading 1.5s infinite linear;
+    }
+    
+    @-webkit-keyframes RTSelfLoading {
+        0% {-webkit-transform: rotate(0deg);}
+        50% {-webkit-transform: rotate(180deg);background:#2ecc71;}
+        100% {-webkit-transform: rotate(360deg);}
+    }
+    
+    @-moz-keyframes RTSelfLoading {
+        0% {-moz-transform: rotate(0deg);}
+        50% {-moz-transform: rotate(180deg);}
+        100% {-moz-transform: rotate(360deg);}
+    }
+    
+    @-ms-keyframes RTSelfLoading {
+        0% {-ms-transform: rotate(0deg);}
+        50% {-ms-transform: rotate(180deg);}
+        100% {-ms-transform: rotate(360deg);}
+    }
+    
+    @keyframes RTSelfLoading {
+        0% {transform: rotate(0deg);}
+        50% {transform: rotate(180deg);}
+        100% {transform: rotate(360deg);}
+    }
 }

@@ -14,7 +14,7 @@ var Loader = znui.react.createClass({
 			return this.props.content;
 		}else if(this.props.title){
 			return <>
-				<i className="fa fa-spinner zr-self-loading" />
+				<i className="fa fa-spinner loader-self-loading" />
 				<span className="title">{this.props.title}</span>
 			</>;
 		}
