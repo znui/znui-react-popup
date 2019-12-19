@@ -1,6 +1,5 @@
-require('./Popover.less');
-var React = require('react');
-var ReactDOM = require('react-dom');
+var React = require('react') || znui.React;
+var ReactDOM = require('react-dom') || znui.ReactDOM;
 
 var Popover = znui.react.createClass({
 	displayName:'Popover',

@@ -18,12 +18,11 @@ if(uglifyIndex!=-1){
 module.exports = {
     context: path.join(process.cwd(), 'src'),
     mode: 'production',
-    entry: {
-        "index": "./index.js"
-    },
+    entry: ['./index.js', './index.less'],
     externals: {
         "react": "React",
-        "react-dom": "ReactDOM"
+        "react-dom": "ReactDOM",
+        "znui-react": "zr"
     },
     output: {
         path: path.join(process.cwd(), 'dist'),
@@ -67,7 +66,7 @@ module.exports = {
                 test:/\.less$/,
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: ["raw-loader", "less-loader"]
+                    use: ["css-loader", "less-loader"]
                 })
             },
             {

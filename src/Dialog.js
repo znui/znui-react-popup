@@ -1,6 +1,4 @@
-require('./Dialog.less');
-var React = require('react');
-
+var React = require('react') || znui.React;
 var Dialog = znui.react.createClass({
 	displayName:'Dialog',
 	getDefaultProps: function (){

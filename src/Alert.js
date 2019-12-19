@@ -1,6 +1,4 @@
-require('./Alert.less');
-var React = require('react');
-
+var React = require('react') || znui.React;
 var Alert = znui.react.createClass({
 	displayName:'Alert',
 	getDefaultProps: function (){

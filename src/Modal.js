@@ -1,6 +1,5 @@
-require('./Modal.less');
-var React = require('react');
-var ReactDOM = require('react-dom');
+var React = require('react') || znui.React;
+var ReactDOM = require('react-dom') || znui.ReactDOM;
 
 var Modal = znui.react.createClass({
 	displayName:'Modal',

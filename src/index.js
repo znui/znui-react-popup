@@ -1,5 +1,3 @@
-require('./ZRArrow.less');
-require('./ZRBorderArrow.less');
 module.exports = {
     Alert: require('./Alert'),
     Dialog: require('./Dialog'),

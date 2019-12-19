@@ -1,6 +1,5 @@
-require('./Toast.less');
-var React = require('react');
-var ReactDOM = require('react-dom');
+var React = require('react') || znui.React;
+var ReactDOM = require('react-dom') || znui.ReactDOM;
 
 var Toast = znui.react.createClass({
 	displayName:'Toast',
@@ -23,6 +22,7 @@ var Toast = znui.react.createClass({
 	}
 });
 
+var React = require('react');
 module.exports = znui.react.toast = zn.Class({
 	static: true,
 	methods: {
