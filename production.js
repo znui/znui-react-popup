@@ -1,3 +1,2 @@
-require('znui-react');
-require('./dist/main.css');
-module.exports = require('./dist/main.js');
+require('./dist/index.style.css');
+module.exports = require('./dist/index.js');
