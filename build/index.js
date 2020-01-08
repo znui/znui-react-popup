@@ -1,7 +1,5 @@
 "use strict";
 
-require('znui-react');
-
 module.exports = {
   Alert: require('./Alert'),
   Dialog: require('./Dialog'),
