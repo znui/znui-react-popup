@@ -1,8 +1,8 @@
-var React = require('react') || znui.React;;
-var ReactDOM = require('react-dom') || znui.ReactDOM;
+var React = znui.React || require('react');
+var ReactDOM = znui.ReactDOM || require('react-dom');
 
-var Tooltip = znui.react.createClass({
-	displayName:'Tooltip',
+var Tooltip = React.createClass({
+	displayName:'ZRTooltip',
 	getInitialState: function (){
 		return {
 			arrowClassName: ''
@@ -13,6 +13,9 @@ var Tooltip = znui.react.createClass({
 		this.fixPosition(this.props.target);
 	},
 	fixPosition: function (target){
+		if(!target){
+			throw new Error('fixPosition target is null.');
+		}
 		var _domWidth = this._dom.offsetWidth,
 			_domHeight = this._dom.offsetHeight,
 			_target = zn.dom.getPosition(target),

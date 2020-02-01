@@ -1,8 +1,8 @@
 var React = require('react') || znui.React;
 var ReactDOM = require('react-dom') || znui.ReactDOM;
 
-var Popover = znui.react.createClass({
-	displayName:'Popover',
+var Popover = React.createClass({
+	displayName:'ZRPopover',
 	getDefaultProps: function (){
 		return {
 			hiddenHeight: 5,
@@ -37,10 +37,11 @@ var Popover = znui.react.createClass({
 	close: function (tag){
 		zn.info('Popover.close:', tag);
 		if(this._dom){
+			
 			window.removeEventListener(this._eventType, this.__onWindowClick, false);
 			if(this._dom.parentNode){
 				this._dom.parentNode.style = '';
-				this._dom.parentNode.removeChild(this._dom);
+				ReactDOM.unmountComponentAtNode(this._dom.parentNode);
 			}
 			this._dom = null;
 			this._eventType = null;
@@ -54,6 +55,8 @@ var Popover = znui.react.createClass({
 			_left = null,
 			_top = null,
 			_arrowClassNames = [];
+
+			console.log(_t, _popoverWidth, _popoverHeight);
 		if(_popoverWidth == '100%'){
 			_popoverWidth = _t.width;
 		}
@@ -63,7 +66,7 @@ var Popover = znui.react.createClass({
 			return;
 		}
 
-		if((_t.x + _popoverWidth) > document.body.scrollWidth){
+		if((_t.x + _popoverWidth) > window.screen.availWidth){
 			_arrowClassNames.push('zr-arrow-placement-right');
 			_left = document.body.scrollWidth - _t.x - _t.width;
 			_popover.style.right = _left + 'px';
@@ -74,7 +77,7 @@ var Popover = znui.react.createClass({
 			_popover.style.left = _left + 'px';
 		}
 
-		if((_t.y + _popoverHeight) > document.body.scrollHeight){
+		if((_t.y + _popoverHeight) > window.screen.availHeight){
 			_arrowClassNames.push('zr-arrow-direction-bottom');
 			_top = _t.height + 10;
 			_popover.style.bottom = _top + 'px';

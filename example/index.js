@@ -1,17 +1,27 @@
+require('znui-react');
 var React = require('react');
 var ReactDOM = require('react-dom');
-var createClass = require('create-react-class');
-require('../../znui-react/index.all.js');
-znui.react.fixCreateReactClass(React, createClass);
-require('../src/index.js');
+var popup = require('../src/index.js');
+require('../src/index.less');
 require('./index.less');
+console.log(popup);
 ReactDOM.render(
     <div>
         <input type="text" />
+        <popup.Dropdown popoverRender={()=><div>123</div>} >
+            <div>Click Text</div>
+        </popup.Dropdown>
+        <popup.Dropdown popoverRender={()=><div>300-300</div>} >
+            <div style={{width: 300, height: 300 }}>Click Text</div>
+        </popup.Dropdown>
+        <popup.Dropdown popoverRender={()=><div>300xxx</div>} >
+            <div style={{width: 300, height: 300 }}>Click Text</div>
+        </popup.Dropdown>
     </div>,
     document.getElementById('container'),
 );
 
+/*
 znui.react.dialog({
     title: 'xx',
     closeable: true,
@@ -28,7 +38,10 @@ znui.react.dialog({
         <div className="form-item"><span className="title">Display Name: </span><input name="displayName" type="text" /></div>
         <div className="form-btn" onClick={(event)=>this.__submitUpdateRole(event, value.name)}>Update Role DisplayName</div>
     </form>
-})
+})*/
+
+
+console.log(znui.react.tooltip.render)
 
 
 /*

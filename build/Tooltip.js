@@ -2,11 +2,12 @@
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-var React = require('react') || znui.React;
-;
-var ReactDOM = require('react-dom') || znui.ReactDOM;
-var Tooltip = znui.react.createClass({
-  displayName: 'Tooltip',
+var React = znui.React || require('react');
+
+var ReactDOM = znui.ReactDOM || require('react-dom');
+
+var Tooltip = React.createClass({
+  displayName: 'ZRTooltip',
   getInitialState: function getInitialState() {
     return {
       arrowClassName: ''
@@ -17,6 +18,10 @@ var Tooltip = znui.react.createClass({
     this.fixPosition(this.props.target);
   },
   fixPosition: function fixPosition(target) {
+    if (!target) {
+      throw new Error('fixPosition target is null.');
+    }
+
     var _domWidth = this._dom.offsetWidth,
         _domHeight = this._dom.offsetHeight,
         _target = zn.dom.getPosition(target),

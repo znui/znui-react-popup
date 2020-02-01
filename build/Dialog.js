@@ -1,8 +1,9 @@
 "use strict";
 
-var React = require('react') || znui.React;
-var Dialog = znui.react.createClass({
-  displayName: 'Dialog',
+var React = znui.React || require('react');
+
+var Dialog = React.createClass({
+  displayName: 'ZRDialog',
   getDefaultProps: function getDefaultProps() {
     return {
       title: '',

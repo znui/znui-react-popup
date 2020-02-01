@@ -1,6 +1,7 @@
-var React = require('react') || znui.React;
-var Alert = znui.react.createClass({
-	displayName:'Alert',
+var React = znui.React || require('react');
+
+var Alert = React.createClass({
+	displayName:'ZRAlert',
 	getDefaultProps: function (){
 		return {
 			title: '',
