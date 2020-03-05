@@ -29,10 +29,47 @@
     }
 
     &>.popover-arrow{
-
+        
     }
 
     &>.popover-close{
-
+        position: absolute;
+        right: -18px;
+        cursor: pointer;
+        &:hover{
+            -webkit-animation: RTSelfLoading 1.5s infinite linear;
+            -moz-animation: RTSelfLoading 1.5s infinite linear;
+            -ms-animation: RTSelfLoading 1.5s infinite linear;
+            animation: RTSelfLoading 1.5s infinite linear;
+            color: red;
+        }
     }
+    &>.popover-content{
+        height: 100%;
+        overflow: scroll;
+    }
+}
+
+@-webkit-keyframes RTSelfLoading {
+    0% {-webkit-transform: rotate(0deg);}
+    50% {-webkit-transform: rotate(180deg);background:#cc4e2e;}
+    100% {-webkit-transform: rotate(360deg);}
+}
+
+@-moz-keyframes RTSelfLoading {
+    0% {-moz-transform: rotate(0deg);}
+    50% {-moz-transform: rotate(180deg);}
+    100% {-moz-transform: rotate(360deg);}
+}
+
+@-ms-keyframes RTSelfLoading {
+    0% {-ms-transform: rotate(0deg);}
+    50% {-ms-transform: rotate(180deg);}
+    100% {-ms-transform: rotate(360deg);}
+}
+
+@keyframes RTSelfLoading {
+    0% {transform: rotate(0deg);}
+    50% {transform: rotate(180deg);}
+    100% {transform: rotate(360deg);}
 }

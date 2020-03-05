@@ -1,8 +1,10 @@
 "use strict";
 
-var React = require('react') || znui.React;
-var ReactDOM = require('react-dom') || znui.ReactDOM;
-var Toast = znui.react.createClass({
+var React = znui.React || require('react');
+
+var ReactDOM = znui.ReactDOM || require('react-dom');
+
+var Toast = React.createClass({
   displayName: 'Toast',
   componentDidMount: function componentDidMount() {
     window.setTimeout(this.out, this.props.delay || 1500);
@@ -22,9 +24,6 @@ var Toast = znui.react.createClass({
     }, this.props.content);
   }
 });
-
-var React = require('react');
-
 module.exports = znui.react.toast = zn.Class({
   "static": true,
   methods: {

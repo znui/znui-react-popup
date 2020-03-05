@@ -2,7 +2,7 @@
   "name": "znui-react-popup",
   "version": "1.2.3",
   "description": "Web popup component.",
-  "main": "production.js",
+  "main": "development.js",
   "scripts": {
     "webpack": "rimraf dist && webpack",
     "webpack-watch": "rimraf dist && webpack --watch",
@@ -12,7 +12,9 @@
     "clean-dist": "rimraf dist",
     "clean-build": "rimraf build",
     "build": "npm run clean-build && babel src -d build",
+    "build-watch": "npm run clean-build && babel src -d build --watch",
     "dist": "npm run clean-dist && webpack --uglify",
+    "dist-watch": "npm run clean-dist && webpack --uglify --watch",
     "release": "npm run build && npm run dist"
   },
   "repository": {
@@ -27,6 +29,7 @@
   "email": "xuyy0618@qq.com",
   "license": "MIT",
   "dependencies": {
-    "znui-react": "^1.3.9"
+    "znui-react": "^1.3.9",
+    "znui-react-icon": "^1.0.7"
   }
 }

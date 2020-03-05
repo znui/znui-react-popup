@@ -1,7 +1,9 @@
 "use strict";
 
-var React = require('react') || znui.React;
-var ReactDOM = require('react-dom') || znui.ReactDOM;
+var React = znui.React || require('react');
+
+var ReactDOM = znui.ReactDOM || require('react-dom');
+
 var TYPE_ICONS = {
   heart: 'fa-heart',
   secondary: 'fa-comment',
@@ -10,7 +12,7 @@ var TYPE_ICONS = {
   error: 'fa-times',
   info: 'fa-info'
 };
-var Notification = znui.react.createClass({
+var Notification = React.createClass({
   displayName: 'Notification',
   componentDidMount: function componentDidMount() {
     window.setTimeout(this.out, this.props.delay || 1500);

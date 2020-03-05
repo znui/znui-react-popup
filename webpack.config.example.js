@@ -30,6 +30,12 @@ module.exports = {
         //libraryTarget: "this"
         //libraryExport: "default"
     },
+    resolve: {
+        alias: {
+            "znui-react": path.resolve(__dirname, '../znui-react'),
+            "znui-react-icon": path.resolve(__dirname, '../znui-react-icon')
+        }
+    },
     module: {
         // Disable handling of unknown requires
         unknownContextRegExp: /$^/,

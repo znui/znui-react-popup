@@ -1,7 +1,8 @@
 "use strict";
 
-var React = require('react') || znui.React;
-var Loader = znui.react.createClass({
+var React = znui.React || require('react');
+
+var Loader = React.createClass({
   displayName: 'Loader',
   getDefaultProps: function getDefaultProps() {
     return {

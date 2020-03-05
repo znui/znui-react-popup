@@ -1,8 +1,10 @@
 "use strict";
 
-var React = require('react') || znui.React;
-var ReactDOM = require('react-dom') || znui.ReactDOM;
-var Modal = znui.react.createClass({
+var React = znui.React || require('react');
+
+var ReactDOM = znui.ReactDOM || require('react-dom');
+
+var Modal = React.createClass({
   displayName: 'Modal',
   destroy: function destroy() {
     var _dom = ReactDOM.findDOMNode(this);

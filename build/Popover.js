@@ -2,8 +2,12 @@
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-var React = require('react') || znui.React;
-var ReactDOM = require('react-dom') || znui.ReactDOM;
+var React = znui.React || require('react');
+
+var ReactDOM = znui.ReactDOM || require('react-dom');
+
+var SVGIcon = require('znui-react-icon').SVGIcon;
+
 var Popover = React.createClass({
   displayName: 'ZRPopover',
   getDefaultProps: function getDefaultProps() {
@@ -26,8 +30,12 @@ var Popover = React.createClass({
       this._eventType = this.props.event.type || this.props.event;
       window.addEventListener(this._eventType, this.__onWindowClick, false);
 
-      this._dom.addEventListener(this._eventType, function (event) {//event.stopPropagation();
-      }, false);
+      this._dom.addEventListener(this._eventType, function (event) {
+        var _result = this.props.onContainerEvent && this.props.onContainerEvent(event, this);
+
+        if (_result === true) {//event.stopPropagation();
+        }
+      }.bind(this), true);
 
       setTimeout(function () {
         this.fixPosition(this.props.target);
@@ -36,12 +44,38 @@ var Popover = React.createClass({
 
     this.props.onPopoverDidMount && this.props.onPopoverDidMount(this);
   },
-  __onWindowClick: function __onWindowClick() {
-    this.close('Popover:window.click');
+  __isMatchParent: function __isMatchParent(target, parent) {
+    if (target) {
+      if (target.tagName == 'BODY' || target.tagName == 'HTML') {
+        return false;
+      }
+
+      if (target !== parent) {
+        return this.__isMatchParent(target.parentNode, parent);
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  },
+  __onWindowClick: function __onWindowClick(event) {
+    if (!this.__isMatchParent(event.target, this._dom)) {
+      var _result = this.props.onWindowOutsideContainerEvent && this.props.onWindowOutsideContainerEvent(event, this);
+
+      if (_result !== true) {
+        this.close("Popover: on window outside container event");
+      }
+    } else {
+      var _result = this.props.onWindowInsideContainerEvent && this.props.onWindowInsideContainerEvent(event, this);
+
+      if (_result === true) {
+        this.close("Popover: on window inside container event");
+      }
+    }
   },
   close: function close(tag) {
-    zn.info('Popover.close:', tag);
-
+    //zn.info('Popover.close:', tag);
     if (this._dom) {
       window.removeEventListener(this._eventType, this.__onWindowClick, false);
 
@@ -63,8 +97,6 @@ var Popover = React.createClass({
         _left = null,
         _top = null,
         _arrowClassNames = [];
-
-    console.log(_t, _popoverWidth, _popoverHeight);
 
     if (_popoverWidth == '100%') {
       _popoverWidth = _t.width;
@@ -120,20 +152,29 @@ var Popover = React.createClass({
     _popover.className = _popover.className + ' ' + _arrowClassNames.join(' ');
   },
   render: function render() {
+    var _this = this;
+
     var _style = {};
 
     if (this.props.height) {
-      _style.height = 'auto';
+      _style.maxHeight = this.props.height + 'px';
     } else {
-      _style.maxHeight = '240px';
+      _style.height = 'auto';
     }
 
     return React.createElement("div", {
-      className: znui.react.classname('zr-popover zr-arrow zr-arrow-color-white', this.state.arrowClassName, this.props.className),
-      style: zn.extend(this.props.style, _style)
-    }, this.props.closeable && React.createElement("i", {
-      className: "popover-close fa fa-close zr-hover-self-loading"
-    }), this.props.content);
+      className: znui.react.classname('zr-popover zr-arrow zr-arrow-color-white', this.state.arrowClassName)
+    }, this.props.closeable && React.createElement("span", {
+      className: "popover-close zr-hover-self-loading",
+      onClick: function onClick() {
+        return _this.close('self close');
+      }
+    }, React.createElement(SVGIcon, {
+      icon: "faTimes"
+    })), React.createElement("div", {
+      className: znui.react.classname("popover-content", this.props.className),
+      style: (zn.extend({}, this.props.style), _style)
+    }, this.props.content));
   }
 });
 module.exports = znui.react.popover = zn.Class({
