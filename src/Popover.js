@@ -144,25 +144,28 @@ var Popover = React.createClass({
 	}
 });
 
-module.exports = znui.react.popover = zn.Class({
-	static: true,
-	methods: {
-		init: function (){
-			this._dom = zn.dom.createRootElement("div", { class: "zr-popover-container" });
-		},
-		render: function (content, options){
-			if(options && options.reset){
-				this.close('zn.popover:render');
+module.exports = {
+	Popover: Popover,
+	popover: zn.Class({
+		static: true,
+		methods: {
+			init: function (){
+				this._dom = zn.dom.createRootElement("div", { class: "zr-popover-container" });
+			},
+			render: function (content, options){
+				if(options && options.reset){
+					this.close('zn.popover:render');
+				}
+				return this._popover = ReactDOM.render(<Popover {...options} content={content} />, this._dom), this._popover;
+			},
+			close: function (tag){
+				if(this._popover){
+					this._popover.close(tag);
+					this._popover = null;
+				}
+	
+				return this;
 			}
-			return this._popover = ReactDOM.render(<Popover {...options} content={content} />, this._dom), this._popover;
-		},
-		close: function (tag){
-			if(this._popover){
-				this._popover.close(tag);
-				this._popover = null;
-			}
-
-			return this;
 		}
-	}
-});
+	})
+};

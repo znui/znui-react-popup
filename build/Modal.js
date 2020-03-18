@@ -9,57 +9,68 @@ var Modal = React.createClass({
   destroy: function destroy() {
     var _dom = ReactDOM.findDOMNode(this);
 
+    var _result = this.props.onDestroyBefore && this.props.onDestroyBefore(_dom);
+
+    if (_result === false) {
+      return false;
+    }
+
     if (_dom && _dom.parentNode.parentNode) {
       _dom.parentNode.parentNode.removeChild(_dom.parentNode);
     }
+
+    this.props.onDestroy && this.props.onDestroy();
   },
   render: function render() {
     return React.createElement(React.Fragment, null, this.props.children);
   }
 });
 ;
-module.exports = znui.react.modal = zn.Class({
-  "static": true,
-  methods: {
-    init: function init() {
-      this._dom = zn.dom.createRootElement("div", {
-        "class": "zr-modal-container"
-      });
-      this._modals = [];
-    },
-    create: function create(content, options) {
-      var _modal = ReactDOM.render(React.createElement(Modal, options, content), zn.dom.createElement('div', {
-        "class": znui.classname('zr-modal', options["class"]),
-        style: znui.style(options.style)
-      }, this._dom));
+module.exports = {
+  Modal: Modal,
+  modal: zn.Class({
+    "static": true,
+    methods: {
+      init: function init() {
+        this._dom = zn.dom.createRootElement("div", {
+          "class": "zr-modal-container"
+        });
+        this._modals = [];
+      },
+      create: function create(content, options) {
+        var _modal = ReactDOM.render(React.createElement(Modal, options, content), zn.dom.createElement('div', {
+          "class": znui.classname('zr-modal', options["class"]),
+          style: znui.style(options.style)
+        }, this._dom));
 
-      return this._modals.push(_modal), _modal;
-    },
-    close: function close(delay) {
-      var _modal = this._modals.pop();
+        return this._modals.push(_modal), _modal;
+      },
+      close: function close(delay) {
+        var _modal = this._modals.pop();
 
-      if (_modal) {
-        if (delay) {
-          setTimeout(function () {
-            return _modal.destroy();
-          }, delay);
-        } else {
-          _modal.destroy();
+        if (_modal) {
+          if (delay) {
+            setTimeout(function () {
+              return _modal.destroy();
+            }, delay);
+          } else {
+            _modal.destroy();
+          }
         }
-      }
 
-      return this;
-    },
-    closeAll: function closeAll(delay) {
-      if (this._modals.length) {
-        this.close(delay);
-        this.closeAll();
-      }
+        return this;
+      },
+      closeAll: function closeAll(delay) {
+        if (this._modals.length) {
+          this.close(delay);
+          this.closeAll();
+        }
 
-      return this;
-    },
-    size: function size() {
-      return this._modals.length;
+        return this;
+      },
+      size: function size() {
+        return this._modals.length;
+      }
     }
-  }
-});
+  })
+};

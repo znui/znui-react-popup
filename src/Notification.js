@@ -39,26 +39,29 @@ var Notification = React.createClass({
 	}
 });
 
-module.exports = znui.react.notification = zn.Class({
-	static: true,
-	methods: {
-		init: function (){
-			this._dom = zn.dom.createRootElement("div", { class: 'zr-notification-container' });
-		},
-		open: function (type, content, delay){
-			ReactDOM.render(<Notification type={type} content={content} delay={delay} />, zn.dom.createElement('div', {}, this._dom));
-		},
-		success: function (content, delay){
-			return this.open('success', content, delay);
-		},
-		warning: function (content, delay){
-			return this.open('warning', content, delay);
-		},
-		error: function (content, delay){
-			return this.open('error', content, delay);
-		},
-		info: function (content, delay){
-			return this.open('info', content, delay);
+module.exports = {
+	Notification: Notification,
+	notification: zn.Class({
+		static: true,
+		methods: {
+			init: function (){
+				this._dom = zn.dom.createRootElement("div", { class: 'zr-notification-container' });
+			},
+			open: function (type, content, delay){
+				ReactDOM.render(<Notification type={type} content={content} delay={delay} />, zn.dom.createElement('div', {}, this._dom));
+			},
+			success: function (content, delay){
+				return this.open('success', content, delay);
+			},
+			warning: function (content, delay){
+				return this.open('warning', content, delay);
+			},
+			error: function (content, delay){
+				return this.open('error', content, delay);
+			},
+			info: function (content, delay){
+				return this.open('info', content, delay);
+			}
 		}
-	}
-});
+	})
+};

@@ -1,5 +1,5 @@
 var React = znui.React || require('react');
-
+var modal = require('./Modal').modal;
 var Loader = React.createClass({
 	displayName:'Loader',
 	getDefaultProps: function (){
@@ -20,38 +20,41 @@ var Loader = React.createClass({
 	},
 	render: function(){
 		return (
-			<div className={znui.react.classname('zr-loader', this.props.className)} >
+			<div className={znui.react.classname('zr-loader', this.props.className)} style={znui.react.style(this.props.style)} >
 				{this.__renderContent()}
 			</div>
 		);
 	}
 });
 
-module.exports = znui.react.loader = zn.Class({
-	static: true,
-	methods: {
-		init: function (){
-			this._loader = null;
-		},
-		create: function (argv){
-			if(this._loader){
-				this._loader.destroy();
+module.exports = {
+	Loader: Loader,
+	loader: zn.Class({
+		static: true,
+		methods: {
+			init: function (){
+				this._loader = null;
+			},
+			create: function (argv){
+				if(this._loader){
+					this._loader.destroy();
+				}
+				this._loader = modal.create(<Loader {...argv} />, { class: 'modal-middle modal-overlay' });
+	
+				return this;
+			},
+			loading: function (title) {
+				return this.create({
+					title: title
+				});
+			},
+			close: function (){
+				if(this._loader){
+					this._loader.destroy();
+				}
+	
+				return this;
 			}
-			this._loader = znui.react.modal.create(<Loader {...argv} />, { class: 'modal-middle modal-overlay' });
-
-			return this;
-		},
-		loading: function (title) {
-			return this.create({
-				title: title
-			});
-		},
-		close: function (){
-			if(this._loader){
-				this._loader.destroy();
-			}
-
-			return this;
 		}
-	}
-});
+	})
+};

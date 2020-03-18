@@ -1,12 +1,12 @@
-require('znui-react');
-module.exports = {
-    Alert: require('./Alert'),
-    Dialog: require('./Dialog'),
-    Dropdown: require('./Dropdown'),
-    Loader: require('./Loader'),
-    Modal: require('./Modal'),
-    Notification: require('./Notification'),
-    Popover: require('./Popover'),
-    Toast: require('./Toast'),
-    Tooltip: require('./Tooltip')
-};
+module.exports = zn.deepAssigns(
+    { }, 
+    require('./Alert'), 
+    require('./Dialog'),
+    require('./Dropdown'),
+    require('./Loader'),
+    require('./Modal'),
+    require('./Notification'),
+    require('./Popover'),
+    require('./Toast'),
+    require('./Tooltip')
+);

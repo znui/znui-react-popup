@@ -69,49 +69,51 @@ var Tooltip = React.createClass({
     }, this.props.content);
   }
 });
-znui.react.tooltip = zn.Class({
-  "static": true,
-  methods: {
-    init: function init() {
-      this._dom = zn.dom.createRootElement("div", {
-        "class": "zr-tooltip-container"
-      });
-      window.addEventListener('mouseover', this.__onWindowMouseOver.bind(this), true);
-      window.addEventListener('resize', this.__onWindowResize.bind(this), false);
-    },
-    __onWindowResize: function __onWindowResize() {
-      znui.react.tooltip.close('tooltip:window.resizing');
-      znui.react.popover.close('tooltip:window.resizing');
-    },
-    __onWindowMouseOver: function __onWindowMouseOver(event) {
-      var _target = event.target;
+module.exports = {
+  Tooltip: Tooltip,
+  tooltip: zn.Class({
+    "static": true,
+    methods: {
+      init: function init() {
+        this._dom = zn.dom.createRootElement("div", {
+          "class": "zr-tooltip-container"
+        });
+        window.addEventListener('mouseover', this.__onWindowMouseOver.bind(this), true);
+        window.addEventListener('resize', this.__onWindowResize.bind(this), false);
+      },
+      __onWindowResize: function __onWindowResize() {
+        znui.react.tooltip.close('tooltip:window.resizing');
+        znui.react.popover.close('tooltip:window.resizing');
+      },
+      __onWindowMouseOver: function __onWindowMouseOver(event) {
+        var _target = event.target;
 
-      if (_target && _target.getAttribute && _target.getAttribute('data-tooltip')) {
-        if (this._tooltip && this._tooltip.props.target !== _target) {
+        if (_target && _target.getAttribute && _target.getAttribute('data-tooltip')) {
+          if (this._tooltip && this._tooltip.props.target !== _target) {
+            this.close();
+          }
+
+          this.render(_target.getAttribute('data-tooltip'), {
+            target: _target
+          });
+        } else {
           this.close();
         }
+      },
+      render: function render(content, options) {
+        this._tooltip = ReactDOM.render(React.createElement(Tooltip, _extends({}, options, {
+          content: content
+        })), this._dom);
+      },
+      close: function close() {
+        if (this._tooltip) {
+          this._tooltip.close();
 
-        this.render(_target.getAttribute('data-tooltip'), {
-          target: _target
-        });
-      } else {
-        this.close();
+          this._tooltip = null;
+        }
+
+        return this;
       }
-    },
-    render: function render(content, options) {
-      this._tooltip = ReactDOM.render(React.createElement(Tooltip, _extends({}, options, {
-        content: content
-      })), this._dom);
-    },
-    close: function close() {
-      if (this._tooltip) {
-        this._tooltip.close();
-
-        this._tooltip = null;
-      }
-
-      return this;
     }
-  }
-});
-module.exports = Tooltip;
+  })
+};

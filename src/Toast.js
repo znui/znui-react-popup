@@ -22,28 +22,31 @@ var Toast = React.createClass({
 	}
 });
 
-module.exports = znui.react.toast = zn.Class({
-	static: true,
-	methods: {
-		init: function (){
-			this._dom = zn.dom.createRootElement("div", { class: "zr-toast-container" });
-		},
-		open: function (type, content, delay){
-			var _dom = document.createElement('div');
-			ReactDOM.render(<Toast type={type} content={content} delay={delay} />, _dom);
-			this._dom.appendChild(_dom);
-		},
-		success: function (content, delay){
-			return this.open('success', content, delay);
-		},
-		warning: function (content, delay){
-			return this.open('warning', content, delay);
-		},
-		error: function (content, delay){
-			return this.open('danger', content, delay);
-		},
-		info: function (content, delay){
-			return this.open('info', content, delay);
+module.exports = {
+	Toast: Toast,
+	toast: zn.Class({
+		static: true,
+		methods: {
+			init: function (){
+				this._dom = zn.dom.createRootElement("div", { class: "zr-toast-container" });
+			},
+			open: function (type, content, delay){
+				var _dom = document.createElement('div');
+				ReactDOM.render(<Toast type={type} content={content} delay={delay} />, _dom);
+				this._dom.appendChild(_dom);
+			},
+			success: function (content, delay){
+				return this.open('success', content, delay);
+			},
+			warning: function (content, delay){
+				return this.open('warning', content, delay);
+			},
+			error: function (content, delay){
+				return this.open('danger', content, delay);
+			},
+			info: function (content, delay){
+				return this.open('info', content, delay);
+			}
 		}
-	}
-});
+	})
+};

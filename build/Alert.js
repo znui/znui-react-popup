@@ -4,6 +4,8 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 var React = znui.React || require('react');
 
+var modal = require('./Modal').modal;
+
 var Alert = React.createClass({
   displayName: 'ZRAlert',
   getDefaultProps: function getDefaultProps() {
@@ -17,7 +19,7 @@ var Alert = React.createClass({
     };
   },
   __onClick: function __onClick(item, index) {
-    znui.react.modal.close();
+    modal.close();
 
     var _result = this.props.onClick && this.props.onClick(item, index, this);
 
@@ -48,59 +50,57 @@ var Alert = React.createClass({
     }.bind(this))));
   }
 });
+module.exports = {
+  Alert: Alert,
+  alert: function alert(content, title, callback, props) {
+    modal.create(React.createElement(Alert, _extends({
+      content: content,
+      title: title,
+      onClick: callback
+    }, props)), {
+      "class": 'modal-middle modal-overlay'
+    });
+  },
+  confirm: function confirm(content, title, _confirm, cancel, options) {
+    var _options = zn.extend({
+      cancel: '取消',
+      confirm: '确定'
+    }, options);
 
-znui.react.alert = function (content, title, callback, props) {
-  znui.react.modal.create(React.createElement(Alert, _extends({
-    content: content,
-    title: title,
-    onClick: callback
-  }, props)), {
-    "class": 'modal-middle modal-overlay'
-  });
+    modal.create(React.createElement(Alert, {
+      content: content,
+      title: title,
+      buttons: [{
+        text: _options.cancel,
+        onClick: cancel
+      }, {
+        text: _options.confirm,
+        onClick: _confirm
+      }]
+    }), {
+      "class": 'modal-middle modal-overlay'
+    });
+  },
+  prompt: function prompt(title, confirm, cancel) {
+    var _input = React.createElement("input", {
+      className: "alert-input",
+      type: "text"
+    });
+
+    modal.create(React.createElement(Alert, {
+      content: _input,
+      title: title,
+      buttons: [{
+        text: '取消',
+        onClick: cancel
+      }, {
+        text: '确定',
+        onClick: function onClick(item, index, alert) {
+          confirm && confirm(alert.props.content, item, index, alert);
+        }
+      }]
+    }), {
+      "class": 'modal-middle modal-overlay'
+    });
+  }
 };
-
-znui.react.confirm = function (content, title, confirm, cancel, options) {
-  var _options = zn.extend({
-    cancel: '取消',
-    confirm: '确定'
-  }, options);
-
-  znui.react.modal.create(React.createElement(Alert, {
-    content: content,
-    title: title,
-    buttons: [{
-      text: _options.cancel,
-      onClick: cancel
-    }, {
-      text: _options.confirm,
-      onClick: confirm
-    }]
-  }), {
-    "class": 'modal-middle modal-overlay'
-  });
-};
-
-znui.react.prompt = function (title, confirm, cancel) {
-  var _input = React.createElement("input", {
-    className: "alert-input",
-    type: "text"
-  });
-
-  znui.react.modal.create(React.createElement(Alert, {
-    content: _input,
-    title: title,
-    buttons: [{
-      text: '取消',
-      onClick: cancel
-    }, {
-      text: '确定',
-      onClick: function onClick(item, index, alert) {
-        confirm && confirm(alert.props.content, item, index, alert);
-      }
-    }]
-  }), {
-    "class": 'modal-middle modal-overlay'
-  });
-};
-
-module.exports = Alert;

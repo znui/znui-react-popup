@@ -1,5 +1,5 @@
 var React = znui.React || require('react');
-
+var modal = require('./Modal').modal;
 var Dialog = React.createClass({
 	displayName:'ZRDialog',
 	getDefaultProps: function (){
@@ -9,7 +9,7 @@ var Dialog = React.createClass({
 		};
 	},
 	__onClose: function (){
-		znui.react.modal.close();
+		modal.close();
 	},
 	render: function(){
 		return (
@@ -26,10 +26,11 @@ var Dialog = React.createClass({
 	}
 });
 
-znui.react.dialog = function (argv){
-	return znui.react.modal.create(<Dialog {...argv} />, {
-		class: 'modal-middle modal-overlay'
-	});
+module.exports = {
+	Dialog: Dialog,
+	dialog: function (argv){
+		return modal.create(<Dialog {...argv} />, {
+			class: 'modal-middle modal-overlay'
+		});
+	}
 };
-
-module.exports = Dialog;
