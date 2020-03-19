@@ -32,16 +32,14 @@ module.exports = {
 	loader: zn.Class({
 		static: true,
 		methods: {
-			init: function (){
-				this._loader = null;
-			},
 			create: function (argv){
 				if(this._loader){
 					this._loader.destroy();
 				}
-				this._loader = modal.create(<Loader {...argv} />, { class: 'modal-middle modal-overlay' });
-	
-				return this;
+				return modal.create(<Loader {...argv} />, { 
+					class: 'modal-middle modal-overlay',
+					ref: (ref) => this._loader = ref
+				});
 			},
 			loading: function (title) {
 				return this.create({

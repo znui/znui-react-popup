@@ -35,18 +35,19 @@ module.exports = {
   loader: zn.Class({
     "static": true,
     methods: {
-      init: function init() {
-        this._loader = null;
-      },
       create: function create(argv) {
+        var _this = this;
+
         if (this._loader) {
           this._loader.destroy();
         }
 
-        this._loader = modal.create(React.createElement(Loader, argv), {
-          "class": 'modal-middle modal-overlay'
+        return modal.create(React.createElement(Loader, argv), {
+          "class": 'modal-middle modal-overlay',
+          ref: function ref(_ref) {
+            return _this._loader = _ref;
+          }
         });
-        return this;
       },
       loading: function loading(title) {
         return this.create({

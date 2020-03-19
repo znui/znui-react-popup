@@ -6,6 +6,8 @@ var React = znui.React || require('react');
 
 var ReactDOM = znui.ReactDOM || require('react-dom');
 
+var popover = require('./Popover').popover;
+
 var Tooltip = React.createClass({
   displayName: 'ZRTooltip',
   getInitialState: function getInitialState() {
@@ -54,6 +56,10 @@ var Tooltip = React.createClass({
     _className && this._dom.classList.add(_className);
   },
   close: function close() {
+    if (!this.__isMounted) {
+      return false;
+    }
+
     if (this._dom) {
       if (this._dom.parentNode) {
         this._dom.parentNode.removeChild(this._dom);
@@ -82,8 +88,8 @@ module.exports = {
         window.addEventListener('resize', this.__onWindowResize.bind(this), false);
       },
       __onWindowResize: function __onWindowResize() {
-        znui.react.tooltip.close('tooltip:window.resizing');
-        znui.react.popover.close('tooltip:window.resizing');
+        this.close('tooltip:window.resizing');
+        popover.close('tooltip:window.resizing');
       },
       __onWindowMouseOver: function __onWindowMouseOver(event) {
         var _target = event.target;

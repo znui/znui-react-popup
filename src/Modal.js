@@ -3,7 +3,13 @@ var ReactDOM = znui.ReactDOM || require('react-dom');
 
 var Modal = React.createClass({
 	displayName:'Modal',
+	componentDidMount: function (){
+		this.props.onComponentDidMount && this.props.onComponentDidMount(this);
+	},
 	destroy: function (){
+		if(!this.__isMounted){
+			return false;
+		}
 		var _dom = ReactDOM.findDOMNode(this);
 		var _result = this.props.onDestroyBefore && this.props.onDestroyBefore(_dom);
 		if(_result === false) {
@@ -11,6 +17,7 @@ var Modal = React.createClass({
 		}
 		if(_dom && _dom.parentNode.parentNode){
 			_dom.parentNode.parentNode.removeChild(_dom.parentNode);
+			ReactDOM.unmountComponentAtNode(_dom.parentNode);
 		}
 		this.props.onDestroy && this.props.onDestroy();
 	},
@@ -31,12 +38,14 @@ module.exports = {
 				this._modals = [];
 			},
 			create: function (content, options){
-				var _modal = ReactDOM.render(<Modal {...options} >{content}</Modal>, zn.dom.createElement('div', {
+				var _ref = null;
+				return ReactDOM.render(<Modal {...options} ref={(ref)=>_ref = ref}>{content}</Modal>, zn.dom.createElement('div', {
 					class: znui.classname('zr-modal', options.class),
 					style: znui.style(options.style)
-				}, this._dom));
-	
-				return this._modals.push(_modal), _modal;
+				}, this._dom), ()=>{
+					this._modals.push(_ref);
+					options.ref && options.ref(_ref);
+				});
 			},
 			close: function (delay){
 				var _modal = this._modals.pop();
