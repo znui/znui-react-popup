@@ -4,6 +4,8 @@ var React = znui.React || require('react');
 
 var ReactDOM = znui.ReactDOM || require('react-dom');
 
+var popover = require('./Popover').popover;
+
 module.exports = {
   Dropdown: React.createClass({
     displayName: 'ZRDropdown',
@@ -20,7 +22,7 @@ module.exports = {
       ReactDOM.findDOMNode(this).removeEventListener(this.props.eventType, this.__eventHandler, false);
     },
     getParent: function getParent(target) {
-      if (target.classList.contains('zr-dropdown')) {
+      if (target.classList.contains('zr-popup-dropdown')) {
         return target;
       } else {
         return this.getParent(target.parentNode);
@@ -47,7 +49,7 @@ module.exports = {
           event.stopPropagation();
           _popover.render = null;
           delete _popover.render;
-          znui.react.popover.render(_render, zn.extend({
+          popover.render(_render, zn.extend({
             reset: true,
             event: event,
             target: _target
@@ -56,8 +58,8 @@ module.exports = {
       }
     },
     render: function render() {
-      return React.createElement("div", {
-        className: znui.react.classname("zr-dropdown", this.props.className),
+      return /*#__PURE__*/React.createElement("div", {
+        className: znui.react.classname("zr-popup-dropdown", this.props.className),
         style: this.props.style
       }, this.props.children);
     }

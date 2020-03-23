@@ -13,13 +13,16 @@ var Alert = React.createClass({
 		};
 	},
 	__onClick: function (item, index){
-		modal.close();
-		var _result = this.props.onClick && this.props.onClick(item, index, this);
-			_result = item.onClick && item.onClick(item, index, this);
+		item.index = index
+		var _result = this.props.onClick && this.props.onClick(item, this);
+			_result = item.onClick && item.onClick(item, this);
+		if(_result !== false){
+			modal.close();
+		}
 	},
 	render: function(){
 		return (
-			<div className={znui.react.classname('zr-alert', this.props.className)} style={this.props.style} >
+			<div className={znui.react.classname('zr-popup-alert', this.props.className)} style={this.props.style} >
 				<div className="alert-inner">
 					{this.props.title && <div className="alert-title">{this.props.title}</div>}
 					{this.props.content && <div className="alert-content">{this.props.content}</div>}
@@ -39,13 +42,16 @@ var Alert = React.createClass({
 module.exports = {
 	Alert: Alert,
 	alert: function (content, title, callback, props){
-		modal.create(<Alert content={content} title={title} onClick={callback} {...props} />, {
-			class: 'modal-middle modal-overlay'
-		});
+		return modal.create(<Alert 
+			content={content} 
+			title={title} 
+			onClick={callback} {...props} />, {
+				class: 'modal-middle modal-overlay'
+			});
 	},
 	confirm: function (content, title, confirm, cancel, options){
 		var _options = zn.extend({ cancel: '取消', confirm: '确定' }, options);
-		modal.create(<Alert
+		return modal.create(<Alert
 			content={content}
 			title={title}
 			buttons={[
@@ -55,17 +61,27 @@ module.exports = {
 				class: 'modal-middle modal-overlay'
 			});
 	},
-	prompt: function (title, confirm, cancel){
-		var _input = <input className="alert-input" type="text" />;
-		modal.create(<Alert
-			content={_input}
-			title={title}
+	prompt: function (argv){
+		var _argv = zn.extend({
+			title: argv.title,
+			content: <input className="alert-input" onChange={argv.onChange} type="text" />,
+			confirm: argv.confirm,
+			cancel: argv.cancel
+		}, argv);
+		return modal.create(<Alert
+			content={_argv.content}
+			title={_argv.title}
 			buttons={[
-				{ text:'取消', onClick: cancel },
+				{ 
+					text: _argv.cancelText || '取消', 
+					onClick: function (event, alert){
+						return _argv.cancel && _argv.cancel(event, alert);
+					} 
+				},
 				{
-					text:'确定',
-					onClick: function (item, index, alert){
-						confirm && confirm(alert.props.content, item, index, alert);
+					text: _argv.confirmText || '确定',
+					onClick: function (event, alert){
+						return _argv.confirm && _argv.confirm(event, alert);
 					}
 				}
 			]} />, {

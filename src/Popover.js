@@ -1,6 +1,5 @@
 var React = znui.React || require('react');
 var ReactDOM = znui.ReactDOM || require('react-dom');
-var SVGIcon = require('znui-react-icon').SVGIcon;
 
 var Popover = React.createClass({
 	displayName:'ZRPopover',
@@ -136,8 +135,14 @@ var Popover = React.createClass({
 			_style.height = 'auto';
 		}
 		return (
-			<div className={znui.react.classname('zr-popover zr-arrow zr-arrow-color-white', this.state.arrowClassName)} >
-				{this.props.closeable && <span className="popover-close zr-hover-self-loading" onClick={()=>this.close('self close')}><SVGIcon icon="faTimes" /></span>}
+			<div className={znui.react.classname('zr-popup-popover zr-arrow zr-arrow-color-white', this.state.arrowClassName)} >
+				{
+					this.props.closeable && <span className="popover-close zr-hover-self-loading" onClick={()=>this.close('self close')}>
+						<svg aria-hidden="true" focusable="false" data-prefix="fas"  className="svg-inline--fa fa-check fa-w-16 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+							<path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+						</svg>
+					</span>
+				}
 				<div className={znui.react.classname("popover-content", this.props.className)} style={zn.extend({}, this.props.style), _style} >{this.props.content}</div>
 			</div>
 		);
@@ -150,7 +155,7 @@ module.exports = {
 		static: true,
 		methods: {
 			init: function (){
-				this._dom = zn.dom.createRootElement("div", { class: "zr-popover-container" });
+				this._dom = zn.dom.createRootElement("div", { class: "zr-popup-popover-container" });
 			},
 			render: function (content, options){
 				if(options && options.reset){

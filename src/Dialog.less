@@ -1,5 +1,18 @@
-.zr-dialog{
+.zr-popup-dialog{
     background-color: #FFF;
+    min-width: 240px;
+    font-family: monospace;
+    border-radius: 3px;
+    box-shadow: 0 0 10px #dcd2d2;
+    -webkit-animation-name: shineRed;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    @-webkit-keyframes  shineRed {
+        from { -webkit-box-shadow: 0 0 5px #bbb; }
+        50% { -webkit-box-shadow: 0 0 10px red; }
+        to { -webkit-box-shadow: 0 0 5px #bbb; }
+    }
+   
     .dialog-header{
         height: 40px;
         line-height: 40px;
@@ -18,13 +31,19 @@
         .dialog-close{
             width: 28px;
             height: 28px;
-            background-color: #d8a8a8;
+            background-color: #F44336;
+            opacity: 0.8;
             margin: 5px 0px;
             text-align: center;
             font-size: 24px;
             line-height: 25px;
+            border-radius: 3px;
             color: #FFF;
             cursor: pointer;
+            font-family: sans-serif;
+            &:hover{
+                opacity: 1;
+            }
         }
     }
     .dialog-body{

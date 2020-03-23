@@ -2,20 +2,21 @@ var React = znui.React || require('react');
 var ReactDOM = znui.ReactDOM || require('react-dom');
 
 var Toast = React.createClass({
-	displayName:'Toast',
+	displayName:'ZRToast',
 	componentDidMount: function (){
-		window.setTimeout(this.out, this.props.delay || 1500);
+		window.setTimeout(this.out, this.props.delay || 1800);
 	},
 	out: function (){
 		var _dom = ReactDOM.findDOMNode(this);
 		_dom.classList.add('toast-out');
 		_dom.addEventListener("animationend", function (){
 			_dom.parentNode.parentNode.removeChild(_dom.parentNode);
+			ReactDOM.unmountComponentAtNode(_dom.parentNode.parentNode);
 		}, false);
 	},
 	render: function(){
 		return (
-			<div className={znui.react.classname('zr-toast toast-in', this.props.type)} >
+			<div className={znui.react.classname('zr-popup-toast toast-in', this.props.type)} >
 				{this.props.content}
 			</div>
 		);
@@ -28,7 +29,7 @@ module.exports = {
 		static: true,
 		methods: {
 			init: function (){
-				this._dom = zn.dom.createRootElement("div", { class: "zr-toast-container" });
+				this._dom = zn.dom.createRootElement("div", { class: "zr-popup-toast-container" });
 			},
 			open: function (type, content, delay){
 				var _dom = document.createElement('div');

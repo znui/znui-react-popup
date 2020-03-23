@@ -5,7 +5,7 @@ module.exports = zn.deepAssigns(
     require('./Dropdown'),
     require('./Loader'),
     require('./Modal'),
-    require('./Notification'),
+    require('./Notifier'),
     require('./Popover'),
     require('./Toast'),
     require('./Tooltip')

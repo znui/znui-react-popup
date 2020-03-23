@@ -7,11 +7,11 @@ var React = znui.React || require('react');
 var ReactDOM = znui.ReactDOM || require('react-dom');
 
 var Modal = React.createClass({
-  displayName: 'Modal',
+  displayName: 'ZRModal',
   componentDidMount: function componentDidMount() {
     this.props.onComponentDidMount && this.props.onComponentDidMount(this);
   },
-  destroy: function destroy() {
+  destroy: function destroy(callback) {
     if (!this.__isMounted) {
       return false;
     }
@@ -31,9 +31,10 @@ var Modal = React.createClass({
     }
 
     this.props.onDestroy && this.props.onDestroy();
+    callback && callback();
   },
   render: function render() {
-    return React.createElement(React.Fragment, null, this.props.children);
+    return /*#__PURE__*/React.createElement(React.Fragment, null, this.props.children);
   }
 });
 ;
@@ -44,7 +45,7 @@ module.exports = {
     methods: {
       init: function init() {
         this._dom = zn.dom.createRootElement("div", {
-          "class": "zr-modal-container"
+          "class": "zr-popup-modal-container"
         });
         this._modals = [];
       },
@@ -52,12 +53,12 @@ module.exports = {
         var _this = this;
 
         var _ref = null;
-        return ReactDOM.render(React.createElement(Modal, _extends({}, options, {
+        return ReactDOM.render( /*#__PURE__*/React.createElement(Modal, _extends({}, options, {
           ref: function ref(_ref2) {
             return _ref = _ref2;
           }
         }), content), zn.dom.createElement('div', {
-          "class": znui.classname('zr-modal', options["class"]),
+          "class": znui.classname('zr-popup-modal', options["class"]),
           style: znui.style(options.style)
         }, this._dom), function () {
           _this._modals.push(_ref);
@@ -65,16 +66,16 @@ module.exports = {
           options.ref && options.ref(_ref);
         });
       },
-      close: function close(delay) {
+      close: function close(delay, callback) {
         var _modal = this._modals.pop();
 
         if (_modal) {
           if (delay) {
             setTimeout(function () {
-              return _modal.destroy();
+              return _modal.destroy(callback);
             }, delay);
           } else {
-            _modal.destroy();
+            _modal.destroy(callback);
           }
         }
 
@@ -82,8 +83,7 @@ module.exports = {
       },
       closeAll: function closeAll(delay) {
         if (this._modals.length) {
-          this.close(delay);
-          this.closeAll();
+          this.close(delay, this.closeAll);
         }
 
         return this;

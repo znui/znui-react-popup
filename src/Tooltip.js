@@ -1,6 +1,5 @@
 var React = znui.React || require('react');
 var ReactDOM = znui.ReactDOM || require('react-dom');
-var popover = require('./Popover').popover;
 
 var Tooltip = React.createClass({
 	displayName:'ZRTooltip',
@@ -48,20 +47,26 @@ var Tooltip = React.createClass({
 		this._dom.style.left = _left + 'px';
 		_className && this._dom.classList.add(_className);
 	},
-	close: function (){
+	destroy: function (callback){
 		if(!this.__isMounted){
 			return false;
 		}
-		if(this._dom){
-			if(this._dom.parentNode){
-				this._dom.parentNode.removeChild(this._dom);
-			}
-			this._dom = null;
+		var _dom = ReactDOM.findDOMNode(this);
+		var _result = this.props.onDestroyBefore && this.props.onDestroyBefore(_dom);
+		if(_result === false) {
+			return false;
+		}
+		if(_dom && _dom.parentNode){
+			_dom.parentNode.removeChild(_dom);
+		}
+		this.props.onDestroy && this.props.onDestroy();
+		if(zn.is(callback, 'function')) {
+			callback();
 		}
 	},
 	render: function(){
 		return (
-			<div className={znui.react.classname("zr-tooltip zr-arrow zr-arrow-color-black zr-arrow-placement-center", this.props.className)} style={this.props.style}>
+			<div className={znui.react.classname("zr-popup-tooltip zr-arrow zr-arrow-color-black zr-arrow-placement-center", this.props.className)} style={this.props.style}>
 				{this.props.content}
 			</div>
 		);
@@ -74,31 +79,37 @@ module.exports = {
 		static: true,
 		methods: {
 			init: function (){
-				this._dom = zn.dom.createRootElement("div", { class: "zr-tooltip-container" });
+				this._dom = zn.dom.createRootElement("div", { class: "zr-popup-tooltip-container" });
 				window.addEventListener('mouseover', this.__onWindowMouseOver.bind(this), true);
 				window.addEventListener('resize', this.__onWindowResize.bind(this), false);
 			},
 			__onWindowResize: function (){
-				this.close('tooltip:window.resizing');
-				popover.close('tooltip:window.resizing');
+				this.close('znui.react.popup.tooltip: window.resizing');
 			},
 			__onWindowMouseOver: function (event){
 				var _target = event.target;
-				if(_target && _target.getAttribute && _target.getAttribute('data-tooltip')){
+				if(_target && _target.getAttribute && _target.getAttribute('data-zr-popup-tooltip')){
 					if(this._tooltip && this._tooltip.props.target !== _target){
-						this.close();
+						this.close('znui.react.popup.tooltip: window.mouseover');
 					}
-					this.render(_target.getAttribute('data-tooltip'), { target: _target });
+					this.render(_target.getAttribute('data-zr-popup-tooltip'), { target: _target });
 				}else {
-					this.close();
+					this.close('znui.react.popup.tooltip: window.mouseover');
 				}
 			},
 			render: function (content, options){
+				if(this._tooltip){
+					this._tooltip.destroy();
+				}
 				this._tooltip = ReactDOM.render(<Tooltip {...options} content={content} />, this._dom);
 			},
-			close: function (){
+			close: function (callback){
 				if(this._tooltip){
-					this._tooltip.close();
+					if(zn.is(callback, 'string') && process && process.env && process.env.NODE_ENV == 'development') {
+						zn.debug(callback);
+					}
+					ReactDOM.unmountComponentAtNode(this._dom);
+					this._tooltip.destroy(callback);
 					this._tooltip = null;
 				}
 	

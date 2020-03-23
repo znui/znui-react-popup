@@ -2,11 +2,11 @@ var React = znui.React || require('react');
 var ReactDOM = znui.ReactDOM || require('react-dom');
 
 var Modal = React.createClass({
-	displayName:'Modal',
+	displayName:'ZRModal',
 	componentDidMount: function (){
 		this.props.onComponentDidMount && this.props.onComponentDidMount(this);
 	},
-	destroy: function (){
+	destroy: function (callback){
 		if(!this.__isMounted){
 			return false;
 		}
@@ -20,6 +20,7 @@ var Modal = React.createClass({
 			ReactDOM.unmountComponentAtNode(_dom.parentNode);
 		}
 		this.props.onDestroy && this.props.onDestroy();
+		callback && callback();
 	},
 	render: function(){
 		return (
@@ -34,26 +35,26 @@ module.exports = {
 		static: true,
 		methods: {
 			init: function (){
-				this._dom = zn.dom.createRootElement("div", { class: "zr-modal-container" });
+				this._dom = zn.dom.createRootElement("div", { class: "zr-popup-modal-container" });
 				this._modals = [];
 			},
 			create: function (content, options){
 				var _ref = null;
 				return ReactDOM.render(<Modal {...options} ref={(ref)=>_ref = ref}>{content}</Modal>, zn.dom.createElement('div', {
-					class: znui.classname('zr-modal', options.class),
+					class: znui.classname('zr-popup-modal', options.class),
 					style: znui.style(options.style)
 				}, this._dom), ()=>{
 					this._modals.push(_ref);
 					options.ref && options.ref(_ref);
 				});
 			},
-			close: function (delay){
+			close: function (delay, callback){
 				var _modal = this._modals.pop();
 				if(_modal){
 					if(delay){
-						setTimeout(() => _modal.destroy(), delay);
+						setTimeout(() => _modal.destroy(callback), delay);
 					}else{
-						_modal.destroy();
+						_modal.destroy(callback);
 					}
 				}
 	
@@ -61,8 +62,7 @@ module.exports = {
 			},
 			closeAll: function (delay){
 				if(this._modals.length){
-					this.close(delay);
-					this.closeAll();
+					this.close(delay, this.closeAll);
 				}
 	
 				return this;

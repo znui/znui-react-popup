@@ -1,7 +1,7 @@
 var React = znui.React || require('react');
 var modal = require('./Modal').modal;
 var Loader = React.createClass({
-	displayName:'Loader',
+	displayName:'ZRLoader',
 	getDefaultProps: function (){
 		return {
 			content: null,
@@ -13,14 +13,14 @@ var Loader = React.createClass({
 			return this.props.content;
 		}else if(this.props.title){
 			return <>
-				<i className="fa fa-spinner loader-self-loading" />
+				<i className="loader" data-loader="spinner"/>
 				<span className="title">{this.props.title}</span>
 			</>;
 		}
 	},
 	render: function(){
 		return (
-			<div className={znui.react.classname('zr-loader', this.props.className)} style={znui.react.style(this.props.style)} >
+			<div className={znui.react.classname('zr-popup-loader', this.props.className)} style={znui.react.style(this.props.style)} >
 				{this.__renderContent()}
 			</div>
 		);

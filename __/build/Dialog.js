@@ -12,21 +12,25 @@ var Dialog = React.createClass({
       content: null
     };
   },
-  __onClose: function __onClose() {
-    modal.close();
+  __onClose: function __onClose(event) {
+    var _result = this.props.onClose && this.props.onClose(event, this);
+
+    if (_result !== false) {
+      modal.close();
+    }
   },
   render: function render() {
-    return React.createElement("div", {
-      className: znui.react.classname('zr-dialog', this.props.className),
+    return /*#__PURE__*/React.createElement("div", {
+      className: znui.react.classname('zr-popup-dialog', this.props.className),
       style: this.props.style
-    }, React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("div", {
       className: "dialog-header"
-    }, this.props.title && React.createElement("div", {
+    }, this.props.title && /*#__PURE__*/React.createElement("div", {
       className: "dialog-title"
-    }, this.props.title), this.props.closeable && React.createElement("span", {
+    }, this.props.title), this.props.closeable && /*#__PURE__*/React.createElement("span", {
       onClick: this.__onClose,
       className: "dialog-close"
-    }, "x")), React.createElement("div", {
+    }, "x")), /*#__PURE__*/React.createElement("div", {
       className: "dialog-body"
     }, this.props.content));
   }
@@ -34,7 +38,7 @@ var Dialog = React.createClass({
 module.exports = {
   Dialog: Dialog,
   dialog: function dialog(argv) {
-    return modal.create(React.createElement(Dialog, argv), {
+    return modal.create( /*#__PURE__*/React.createElement(Dialog, argv), {
       "class": 'modal-middle modal-overlay'
     });
   }

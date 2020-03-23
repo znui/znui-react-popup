@@ -6,11 +6,12 @@
     background-color: @color;
 }
 
-.zr-toast-container{
+.zr-popup-toast-container{
     position: relative;
+    font-family: sans-serif;
 }
 
-.zr-toast {
+.zr-popup-toast {
     position: fixed;
     z-index: 12000;
     padding: 8px;
@@ -23,6 +24,7 @@
     text-align: center;
     margin: 0 auto;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+    box-shadow: 0 0 10px #dcd2d2;
 
     &.toast-in{
         animation: toastIn 0.4s;

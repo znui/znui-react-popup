@@ -5,8 +5,10 @@
     background-color: @color;
 }
 
-.zr-notification-container {
+.zr-popup-notifier-container {
     position: absolute;
+    font-size: 14px;
+    font-family: monospace;
     z-index: 15000;
     right: 20px;
     top: 50px;
@@ -16,7 +18,7 @@
 
 }
 
-.zr-notification {
+.zr-popup-notifier {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -26,11 +28,22 @@
     color: #fff;
     min-width: 320px;
     border-radius: 3px;
+    box-shadow: 0 0 10px #dcd2d2;
 
     .icon, .content {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .svg-inline--fa {
+        display: inline-block;
+        font-size: inherit;
+        height: 1em;
+        overflow: visible;
+        vertical-align: -0.125em;
+        width: 1em;
+        overflow: visible;
     }
 
     .icon{
@@ -46,6 +59,7 @@
         padding-right: 72px;
         justify-content: flex-start;
         text-align: left;
+        text-shadow: 2px 2px 4px #232121;
     }
 
     .close{

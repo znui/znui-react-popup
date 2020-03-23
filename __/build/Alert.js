@@ -19,28 +19,32 @@ var Alert = React.createClass({
     };
   },
   __onClick: function __onClick(item, index) {
-    modal.close();
+    item.index = index;
 
-    var _result = this.props.onClick && this.props.onClick(item, index, this);
+    var _result = this.props.onClick && this.props.onClick(item, this);
 
-    _result = item.onClick && item.onClick(item, index, this);
+    _result = item.onClick && item.onClick(item, this);
+
+    if (_result !== false) {
+      modal.close();
+    }
   },
   render: function render() {
-    return React.createElement("div", {
-      className: znui.react.classname('zr-alert', this.props.className),
+    return /*#__PURE__*/React.createElement("div", {
+      className: znui.react.classname('zr-popup-alert', this.props.className),
       style: this.props.style
-    }, React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("div", {
       className: "alert-inner"
-    }, this.props.title && React.createElement("div", {
+    }, this.props.title && /*#__PURE__*/React.createElement("div", {
       className: "alert-title"
-    }, this.props.title), this.props.content && React.createElement("div", {
+    }, this.props.title), this.props.content && /*#__PURE__*/React.createElement("div", {
       className: "alert-content"
-    }, this.props.content)), React.createElement("div", {
+    }, this.props.content)), /*#__PURE__*/React.createElement("div", {
       className: "alert-btns"
     }, this.props.buttons.map(function (item, index) {
       var _this = this;
 
-      return React.createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
         key: index,
         className: "alert-btn",
         onClick: function onClick() {
@@ -53,7 +57,7 @@ var Alert = React.createClass({
 module.exports = {
   Alert: Alert,
   alert: function alert(content, title, callback, props) {
-    modal.create(React.createElement(Alert, _extends({
+    return modal.create( /*#__PURE__*/React.createElement(Alert, _extends({
       content: content,
       title: title,
       onClick: callback
@@ -67,7 +71,7 @@ module.exports = {
       confirm: '确定'
     }, options);
 
-    modal.create(React.createElement(Alert, {
+    return modal.create( /*#__PURE__*/React.createElement(Alert, {
       content: content,
       title: title,
       buttons: [{
@@ -81,22 +85,30 @@ module.exports = {
       "class": 'modal-middle modal-overlay'
     });
   },
-  prompt: function prompt(title, confirm, cancel) {
-    var _input = React.createElement("input", {
-      className: "alert-input",
-      type: "text"
-    });
+  prompt: function prompt(argv) {
+    var _argv = zn.extend({
+      title: argv.title,
+      content: /*#__PURE__*/React.createElement("input", {
+        className: "alert-input",
+        onChange: argv.onChange,
+        type: "text"
+      }),
+      confirm: argv.confirm,
+      cancel: argv.cancel
+    }, argv);
 
-    modal.create(React.createElement(Alert, {
-      content: _input,
-      title: title,
+    return modal.create( /*#__PURE__*/React.createElement(Alert, {
+      content: _argv.content,
+      title: _argv.title,
       buttons: [{
-        text: '取消',
-        onClick: cancel
+        text: _argv.cancelText || '取消',
+        onClick: function onClick(event, alert) {
+          return _argv.cancel && _argv.cancel(event, alert);
+        }
       }, {
-        text: '确定',
-        onClick: function onClick(item, index, alert) {
-          confirm && confirm(alert.props.content, item, index, alert);
+        text: _argv.confirmText || '确定',
+        onClick: function onClick(event, alert) {
+          return _argv.confirm && _argv.confirm(event, alert);
         }
       }]
     }), {
