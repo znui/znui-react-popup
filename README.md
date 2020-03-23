@@ -24,28 +24,13 @@ var popup = require('znui-react-popup');
 
 znui.react.createApplication({
     render: <div>
-        <popup.Dropdown popover={{
-					render: <div>123</div>,
-					onWindowInsideContainerEvent: function (event, popover){
-						return true;
-					}
-				}} >
+        <popup.Dropdown popover={{ render: <div>123</div> }} >
             <div>Click Text</div>
         </popup.Dropdown>
-        <popup.Dropdown popover={{
-                        render: <div>300-300</div>,
-                        onWindowInsideContainerEvent: function (event, popover){
-                            return true;
-                        }
-                    }} >
+        <popup.Dropdown popover={{ render: <div>300-300</div> }} >
             <div style={{width: 300, height: 300, backgroundColor: 'yellow' }}>Click Text</div>
         </popup.Dropdown>
-        <popup.Dropdown popover={{
-                        render: <div>300xxx</div>,
-                        onWindowInsideContainerEvent: function (event, popover){
-                            return true;
-                        }
-                    }} >
+        <popup.Dropdown popover={{ render: <div>300xxx</div> }} >
             <div style={{width: 300, height: 300, backgroundColor: 'green' }}>Click Text</div>
         </popup.Dropdown>
         <span data-zr-popup-tooltip="显示数据" style={{backgroundColor: 'red'}}>显示数据</span>
