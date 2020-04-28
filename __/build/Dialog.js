@@ -22,7 +22,8 @@ var Dialog = React.createClass({
   render: function render() {
     return /*#__PURE__*/React.createElement("div", {
       className: znui.react.classname('zr-popup-dialog', this.props.className),
-      style: this.props.style
+      style: this.props.style,
+      "data-focus": this.props.focus
     }, /*#__PURE__*/React.createElement("div", {
       className: "dialog-header"
     }, this.props.title && /*#__PURE__*/React.createElement("div", {
@@ -37,9 +38,11 @@ var Dialog = React.createClass({
 });
 module.exports = {
   Dialog: Dialog,
-  dialog: function dialog(argv) {
-    return modal.create( /*#__PURE__*/React.createElement(Dialog, argv), {
+  dialog: function dialog(argv, ifPush) {
+    var _dialog = modal.create( /*#__PURE__*/React.createElement(Dialog, argv), {
       "class": 'modal-middle modal-overlay'
-    });
+    }, ifPush);
+
+    return _dialog;
   }
 };

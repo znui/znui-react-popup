@@ -16,7 +16,7 @@ var Dialog = React.createClass({
 	},
 	render: function(){
 		return (
-			<div className={znui.react.classname('zr-popup-dialog', this.props.className)} style={this.props.style} >
+			<div className={znui.react.classname('zr-popup-dialog', this.props.className)} style={this.props.style} data-focus={this.props.focus} >
 				<div className="dialog-header">
 					{this.props.title && <div className="dialog-title">{this.props.title}</div>}
 					{this.props.closeable && <span onClick={this.__onClose} className="dialog-close">x</span>}
@@ -31,9 +31,11 @@ var Dialog = React.createClass({
 
 module.exports = {
 	Dialog: Dialog,
-	dialog: function (argv){
-		return modal.create(<Dialog {...argv} />, {
+	dialog: function (argv, ifPush){
+		var _dialog = modal.create(<Dialog {...argv} />, {
 			class: 'modal-middle modal-overlay'
-		});
+		}, ifPush);
+
+		return _dialog;
 	}
 };

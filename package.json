@@ -1,6 +1,6 @@
 {
   "name": "znui-react-popup",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Web popup component.",
   "main": "index.js",
   "scripts": {

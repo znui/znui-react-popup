@@ -48,7 +48,7 @@ module.exports = {
           ref: function ref(_ref) {
             return _this._loader = _ref;
           }
-        });
+        }, false);
       },
       loading: function loading(title) {
         return this.create({

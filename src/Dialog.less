@@ -3,14 +3,17 @@
     min-width: 240px;
     font-family: monospace;
     border-radius: 3px;
-    box-shadow: 0 0 10px #dcd2d2;
-    -webkit-animation-name: shineRed;
-    -webkit-animation-duration: 1.5s;
-    -webkit-animation-iteration-count: infinite;
-    @-webkit-keyframes  shineRed {
-        from { -webkit-box-shadow: 0 0 5px #bbb; }
-        50% { -webkit-box-shadow: 0 0 10px red; }
-        to { -webkit-box-shadow: 0 0 5px #bbb; }
+
+    &[data-focus="true"]{
+        box-shadow: 0 0 10px #dcd2d2;
+        -webkit-animation-name: shineRed;
+        -webkit-animation-duration: 1.5s;
+        -webkit-animation-iteration-count: infinite;
+        @-webkit-keyframes  shineRed {
+            from { -webkit-box-shadow: 0 0 5px #bbb; }
+            50% { -webkit-box-shadow: 0 0 10px red; }
+            to { -webkit-box-shadow: 0 0 5px #bbb; }
+        }
     }
    
     .dialog-header{

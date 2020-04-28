@@ -98,15 +98,29 @@ module.exports = {
       __onWindowResize: function __onWindowResize() {
         this.close('znui.react.popup.tooltip: window.resizing');
       },
-      __onWindowMouseOver: function __onWindowMouseOver(event) {
-        var _target = event.target;
+      __findZRPopupTooltipValue: function __findZRPopupTooltipValue(target) {
+        if (target) {
+          if (target.tagName == 'BODY' || target.tagName == 'HTML') {
+            return false;
+          }
 
-        if (_target && _target.getAttribute && _target.getAttribute('data-zr-popup-tooltip')) {
+          if (target.getAttribute && target.getAttribute('data-zr-popup-tooltip')) {
+            return target.getAttribute('data-zr-popup-tooltip');
+          } else {
+            return this.__findZRPopupTooltipValue(target.parentNode);
+          }
+        }
+      },
+      __onWindowMouseOver: function __onWindowMouseOver(event) {
+        var _target = event.target,
+            _value = this.__findZRPopupTooltipValue(_target);
+
+        if (_target && _value) {
           if (this._tooltip && this._tooltip.props.target !== _target) {
             this.close('znui.react.popup.tooltip: window.mouseover');
           }
 
-          this.render(_target.getAttribute('data-zr-popup-tooltip'), {
+          this.render(_value, {
             target: _target
           });
         } else {

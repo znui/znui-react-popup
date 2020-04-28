@@ -39,7 +39,7 @@ module.exports = {
 				return modal.create(<Loader {...argv} />, { 
 					class: 'modal-middle modal-overlay',
 					ref: (ref) => this._loader = ref
-				});
+				}, false);
 			},
 			loading: function (title) {
 				return this.create({
