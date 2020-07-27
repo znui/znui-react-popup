@@ -276,6 +276,8 @@
 }
 .zr-popup-dialog .dialog-body {
   padding: 4px;
+  min-width: 480px;
+  overflow: auto;
 }
 .zr-popup-dialog.fixed {
   display: flex;
