@@ -60,9 +60,8 @@ module.exports = {
         var _modal = ReactDOM.render( /*#__PURE__*/React.createElement(Modal, options, content), zn.dom.createElement('div', {
           "class": znui.classname('zr-popup-modal', options["class"]),
           style: znui.style(options.style)
-        }, this._dom));
+        }, this._dom)); //zn.debug('Modal created(' + (this._modals.length + 1) + '): ', _modal);
 
-        zn.debug('Modal created(' + (this._modals.length + 1) + '): ', _modal);
 
         if (ifPush !== false) {
           this._modals.push(_modal);
@@ -71,11 +70,8 @@ module.exports = {
         return _modal;
       },
       close: function close(delay, callback) {
-        zn.debug('Modal close(' + this._modals.length + '): ');
-
+        //zn.debug('Modal close(' + this._modals.length + '): ');
         var _modal = this._modals.pop();
-
-        console.log(this._modals);
 
         if (_modal) {
           if (_modal.state.destroyed) {

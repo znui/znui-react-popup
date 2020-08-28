@@ -119,7 +119,7 @@ module.exports = {
 			close: function (callback){
 				if(this._tooltip){
 					if(zn.is(callback, 'string') && process && process.env && process.env.NODE_ENV == 'development') {
-						zn.debug(callback);
+						//zn.debug(callback);
 					}
 					ReactDOM.unmountComponentAtNode(this._dom);
 					this._tooltip.destroy(callback);

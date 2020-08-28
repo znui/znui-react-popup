@@ -115,7 +115,7 @@
   border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #3d4245;
 }
 .zr-popup-alert {
-  position: absolute;
+  margin: auto;
   background-color: rgba(232, 232, 232, 0.85);
   border-radius: 5px;
   overflow: hidden;
@@ -226,6 +226,7 @@
   min-width: 240px;
   font-family: monospace;
   border-radius: 3px;
+  margin: 100px 0px;
 }
 .zr-popup-dialog[data-focus="true"] {
   box-shadow: 0 0 10px #dcd2d2;
@@ -301,6 +302,7 @@
   min-width: 98px;
   min-height: 98px;
   padding: 15px;
+  margin: auto;
   background-color: rgba(99, 97, 97, 0.5);
   color: #FFF;
   font-size: 16px;
@@ -469,7 +471,7 @@
 .zr-popup-modal.modal-middle {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 .zr-popup-modal.modal-overlay {

@@ -52,7 +52,7 @@ module.exports = {
 					class: znui.classname('zr-popup-modal', options.class),
 					style: znui.style(options.style)
 				}, this._dom));
-				zn.debug('Modal created(' + (this._modals.length + 1) + '): ', _modal);
+				//zn.debug('Modal created(' + (this._modals.length + 1) + '): ', _modal);
 				if(ifPush !== false){
 					this._modals.push(_modal)
 				}
@@ -60,9 +60,8 @@ module.exports = {
 				return _modal;
 			},
 			close: function (delay, callback){
-				zn.debug('Modal close(' + this._modals.length + '): ');
+				//zn.debug('Modal close(' + this._modals.length + '): ');
 				var _modal = this._modals.pop();
-				console.log(this._modals);
 				if(_modal){
 					if(_modal.state.destroyed){
 						return this.close(delay, callback);

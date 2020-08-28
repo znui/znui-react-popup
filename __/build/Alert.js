@@ -26,7 +26,7 @@ var Alert = React.createClass({
     _result = item.onClick && item.onClick(item, this);
 
     if (_result !== false) {
-      zn.debug('alert.close');
+      //zn.debug('alert.close');
       modal.close();
     }
   },
