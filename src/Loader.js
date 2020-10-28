@@ -42,9 +42,13 @@ module.exports = {
 				}, false);
 			},
 			loading: function (title) {
-				return this.create({
-					title: title
-				});
+				if(typeof title == 'string'){
+					return this.create({
+						title: title
+					});
+				}else if(typeof title == 'object') {
+					return this.create(title);
+				}
 			},
 			close: function (){
 				if(this._loader){

@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var React = znui.React || require('react');
 
 var modal = require('./Modal').modal;
@@ -51,9 +53,13 @@ module.exports = {
         }, false);
       },
       loading: function loading(title) {
-        return this.create({
-          title: title
-        });
+        if (typeof title == 'string') {
+          return this.create({
+            title: title
+          });
+        } else if (_typeof(title) == 'object') {
+          return this.create(title);
+        }
       },
       close: function close() {
         if (this._loader) {
