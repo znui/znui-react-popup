@@ -13,13 +13,21 @@ var TYPE_ICONS = {
 var Notifier = React.createClass({
 	displayName:'ZRNotification',
 	componentDidMount: function (){
-		window.setTimeout(this.out, this.props.delay || 1500);
+		this._timeout = window.setTimeout(this.out, this.props.delay || 3000);
+	},
+	componentWillUnmount: function (){
+		if(this._timeout) {
+			window.clearTimeout(this._timeout);
+		}
 	},
 	out: function (){
 		var _dom = ReactDOM.findDOMNode(this);
 		_dom.classList.add('notification-out');
 		_dom.addEventListener("animationend", function (){
-			if(_dom.parentNode.parentNode){
+			if(this._timeout){
+				window.clearTimeout(this._timeout);
+			}
+			if(_dom.parentNode && _dom.parentNode.parentNode){
 				_dom.parentNode.parentNode.removeChild(_dom.parentNode);
 				ReactDOM.unmountComponentAtNode(_dom.parentNode);
 			}
@@ -36,7 +44,11 @@ var Notifier = React.createClass({
 				<div className="content">
 					{this.props.content}
 				</div>
-				<i className="close fa fa-times" onClick={this.out} />
+				{
+					/*
+						<i className="close fa fa-times" onClick={this.out} />
+					*/
+				}
 			</div>
 		);
 	}

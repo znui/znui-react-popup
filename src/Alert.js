@@ -23,7 +23,7 @@ var Alert = React.createClass({
 	},
 	render: function(){
 		return (
-			<div className={znui.react.classname('zr-popup-alert', this.props.className)} style={this.props.style} >
+			<div className={znui.react.classname('zr-popup-alert alert-in', this.props.className)} style={this.props.style} >
 				<div className="alert-inner">
 					{this.props.title && <div className="alert-title">{this.props.title}</div>}
 					{this.props.content && <div className="alert-content">{this.props.content}</div>}

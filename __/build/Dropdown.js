@@ -28,6 +28,13 @@ module.exports = {
         return this.getParent(target.parentNode);
       }
     },
+    closePopover: function closePopover() {
+      if (this._popover) {
+        this._popover.close();
+      }
+
+      return this;
+    },
     __eventHandler: function __eventHandler(event) {
       if (this.props.disabled) {
         return;
@@ -49,7 +56,8 @@ module.exports = {
           event.stopPropagation();
           _popover.render = null;
           delete _popover.render;
-          popover.render(_render, zn.extend({
+          this.closePopover();
+          this._popover = popover.render(_render, zn.extend({
             reset: true,
             event: event,
             target: _target

@@ -6,6 +6,7 @@ var Popover = React.createClass({
 	getDefaultProps: function (){
 		return {
 			hiddenHeight: 5,
+			stopPropagation: false,
 			closeable: false,
 			popoverWidth: null,
 			popoverHeight: null
@@ -18,60 +19,35 @@ var Popover = React.createClass({
 	},
 	componentDidMount: function (){
 		this._dom = ReactDOM.findDOMNode(this);
-		if(this.props.event){
-			this._eventType = this.props.event.type || this.props.event;
-			window.addEventListener(this._eventType, this.__onWindowClick, false);
-			this._dom.addEventListener(this._eventType, function (event){
-				var _result = this.props.onContainerEvent && this.props.onContainerEvent(event, this);
-				if(_result === true){
-					//event.stopPropagation();
-				}
-			}.bind(this), true);
-			setTimeout(function (){
-				this.fixPosition(this.props.target);
-			}.bind(this), 0);
-		}
+		this._dom.addEventListener(this.props.event.type, this.__eventListener, false);
+		setTimeout(function (){
+			this.fixPosition(this.props.target);
+		}.bind(this), 0);
 
 		this.props.onPopoverDidMount && this.props.onPopoverDidMount(this);
 	},
-	__isMatchParent: function (target, parent){
-		if(target){
-			if(target.tagName == 'BODY' || target.tagName == 'HTML') {
-				return false;
-			}
-			if(target !== parent){
-				return this.__isMatchParent(target.parentNode, parent);
-			}else{
-				return true;
-			}
-		}else{
-			return true;
+	__eventListener: function (event){
+		var _result = this.props.onContainerEvent && this.props.onContainerEvent(event, this);
+		if(this.props.stopPropagation) {
+			event.stopPropagation();
+			event.preventDefault();
+		}
+		if(_result !== false ){
+			this.close();
 		}
 	},
-	__onWindowClick: function (event){
-		if(!this.__isMatchParent(event.target, this._dom)){
-			var _result = this.props.onWindowOutsideContainerEvent && this.props.onWindowOutsideContainerEvent(event, this);
-			if(_result !== true){
-				this.close("Popover: on window outside container event");
+	close: function (callback){
+		if(!this._dom) return;
+		var _dom = this._dom;
+		_dom.classList.add('popover-out');
+		_dom.removeEventListener(this.props.event.type, this.__eventListener, false);
+		_dom.addEventListener("animationend", function (){
+			if(_dom.parentNode && _dom.parentNode.parentNode){
+				_dom.parentNode.parentNode.removeChild(_dom.parentNode);
+				ReactDOM.unmountComponentAtNode(_dom.parentNode);
+				callback && callback();
 			}
-		}else{
-			var _result = this.props.onWindowInsideContainerEvent && this.props.onWindowInsideContainerEvent(event, this);
-			if(_result === true){
-				this.close("Popover: on window inside container event");
-			}
-		}
-	},
-	close: function (tag){
-		//zn.info('Popover.close:', tag);
-		if(this._dom){
-			window.removeEventListener(this._eventType, this.__onWindowClick, false);
-			if(this._dom.parentNode){
-				this._dom.parentNode.style = '';
-				ReactDOM.unmountComponentAtNode(this._dom.parentNode);
-			}
-			this._dom = null;
-			this._eventType = null;
-		}
+		}, false);
 	},
 	fixPosition: function (target){
 		var _popover = this._dom;
@@ -124,8 +100,11 @@ var Popover = React.createClass({
 		}
 
 		_popover.style.visibility = 'visible';
-		_arrowClassNames.push('zn-animate-scale-up');
+		_arrowClassNames.push('zr-animate-scale-up');
 		_popover.className = _popover.className + ' ' + _arrowClassNames.join(' ');
+	},
+	__onContentScroll: function (event){
+		this.props.onContentScroll && this.props.onContentScroll(event, this);
 	},
 	render: function(){
 		var _style = {};
@@ -135,7 +114,7 @@ var Popover = React.createClass({
 			_style.height = 'auto';
 		}
 		return (
-			<div className={znui.react.classname('zr-popup-popover zr-arrow zr-arrow-color-white', this.state.arrowClassName)} >
+			<div className={znui.react.classname('zr-popup-popover popover-in zr-arrow zr-arrow-color-white', this.state.arrowClassName)} >
 				{
 					this.props.closeable && <span className="popover-close zr-hover-self-loading" onClick={()=>this.close('self close')}>
 						<svg aria-hidden="true" focusable="false" data-prefix="fas"  className="svg-inline--fa fa-check fa-w-16 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -143,7 +122,7 @@ var Popover = React.createClass({
 						</svg>
 					</span>
 				}
-				<div className={znui.react.classname("popover-content", this.props.className)} style={zn.extend({}, this.props.style), _style} >{this.props.content}</div>
+				<div onScroll={this.__onContentScroll} className={znui.react.classname("popover-content", this.props.className)} style={zn.extend({}, this.props.style), _style} >{this.props.content}</div>
 			</div>
 		);
 	}
@@ -156,14 +135,74 @@ module.exports = {
 		methods: {
 			init: function (){
 				this._dom = zn.dom.createRootElement("div", { class: "zr-popup-popover-container" });
+				this._popovers = {};
+			},
+			__resolveAllPopover: function (target, values){
+				values = values || [];
+				if(target){
+					if(target.tagName == 'BODY') return values;
+					if(target.getAttribute){
+						if(target.getAttribute("data-popover-id")){
+							values.push(target.getAttribute("data-popover-id"));
+						}
+						if(target.getAttribute("data-popover-ref-ids")){
+							values = values.concat(target.getAttribute("data-popover-ref-ids"));
+						}
+					}
+
+					return this.__resolveAllPopover(target.parentNode, values);
+				}
+				return values;
+			},
+			__initWindowEvent: function (options){
+				var _type = options.event.type;
+				window.__znui_react_popup_events__ = window.__znui_react_popup_events__ || [];
+				if(window.__znui_react_popup_events__.indexOf(_type) === -1){
+					window.__znui_react_popup_events__.push(_type);
+					window.addEventListener(_type, (event)=>this.__onWindowClick(event, options), false);
+				}
+			},
+			__onWindowClick: function (event, options){
+				this.closeTarget(event.target);
 			},
 			render: function (content, options){
-				if(options && options.reset){
-					this.close('zn.popover:render');
+				if(options){
+					if(options.reset) {
+						this.closeTarget(options.target);
+					}
+					if(options.event){
+						this.__initWindowEvent(options);
+					}
 				}
-				return this._popover = ReactDOM.render(<Popover {...options} content={content} />, this._dom), this._popover;
+
+				var _id = zn.uuid(),
+					_refids = this.__resolveAllPopover(options.event.target),
+					_attrs = {
+						"data-popover-id": _id
+					};
+				if(_refids.length){
+					_attrs["data-popover-ref-ids"] = _refids.join(',');
+				}
+				var _dom = zn.dom.createElement('div', _attrs, this._dom);
+				var _popover = ReactDOM.render(<Popover {...options} 
+					content={content} 
+					onContentScroll={(event, popover)=>{
+						this.closeTarget(event.target);
+					}} />, _dom);
+
+				return this._popovers[_id] = _popover, _popover;
 			},
-			close: function (tag){
+			closeTarget: function (target){
+				var _popovers = this.__resolveAllPopover(target, []) || [];
+				for(var key in this._popovers){
+					if(_popovers.indexOf(key) === -1){
+						this._popovers[key].close();
+						this._popovers[key] = null;
+						delete this._popovers[key];
+					}
+				}
+			},
+			closeAll: function (tag){
 				if(this._popover){
 					this._popover.close(tag);
 					this._popover = null;

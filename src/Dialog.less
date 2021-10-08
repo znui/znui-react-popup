@@ -4,6 +4,10 @@
     font-family: monospace;
     border-radius: 3px;
     margin: 100px 0px;
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
 
     &[data-focus="true"]{
         box-shadow: 0 0 10px #dcd2d2;
@@ -14,6 +18,40 @@
             from { -webkit-box-shadow: 0 0 5px #bbb; }
             50% { -webkit-box-shadow: 0 0 10px red; }
             to { -webkit-box-shadow: 0 0 5px #bbb; }
+        }
+    }
+
+    &[data-fullscreen="true"]{
+        overflow: auto;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0px !important;
+        border-radius: 0px !important;
+    }
+
+    &.auto-width{
+        .dialog-body{
+            width: auto;
+        }
+    }
+
+    @media (max-width: 480px) {
+        &{
+            width: 90% !important;
+            margin: 20px 0px;
+        }
+        &.min-width{
+            .dialog-body{
+                min-width: 0px;
+            }
+        }
+    }
+
+    @media (min-width: 780px) {
+        &.min-width{
+            .dialog-body{
+                min-width: 480px;
+            }
         }
     }
    
@@ -29,8 +67,18 @@
         display: flex;
         justify-content: space-between;
         flex-direction: row;
+        .btns{
+            display: flex;
+        }
         .dialog-title{
 
+        }
+        .full-screen{
+            width: 28px;
+            height: 28px;
+            margin: 5px;
+            color: #03a9f4;
+            cursor: pointer;
         }
         .dialog-close{
             width: 28px;
@@ -52,8 +100,7 @@
     }
     .dialog-body{
         padding: 10px;
-        min-width: 480px;
-        overflow: auto;
+        /*overflow: auto;*/
     }
 
     &.fixed{
@@ -64,6 +111,47 @@
         .dialog-body{
             flex: 1;
             overflow: auto;
+        }
+    }
+
+
+    &.dialog-in{
+        animation: dialogIn 0.4s;
+        -moz-animation: dialogIn 0.4s; /* Firefox */
+        -webkit-animation: dialogIn 0.4s; /* Safari and Chrome */
+        -o-animation: dialogIn 0.4s; /* Opera */
+    }
+
+    &.dialog-out{
+        animation: dialogOut 0.4s;
+        -moz-animation: dialogOut 0.4s; /* Firefox */
+        -webkit-animation: dialogOut 0.4s; /* Safari and Chrome */
+        -o-animation: dialogOut 0.4s; /* Opera */
+    }
+
+    @keyframes dialogIn {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, 0, 0) scale(0.815);
+            transform: translate3d(0, 0, 0) scale(0.815);
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0) scale(1);
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+    }
+
+    @keyframes dialogOut {
+        from {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0) scale(1);
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+        to {
+            opacity: 0;
+            -webkit-transform: translate3d(0, 0, 0) scale(0.815);
+            transform: translate3d(0, 0, 0) scale(0.815);
         }
     }
 }

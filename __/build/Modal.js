@@ -90,7 +90,7 @@ module.exports = {
         return this;
       },
       closeAll: function closeAll(delay) {
-        if (this._modals.length) {
+        if (this && this._modals.length) {
           this.close(delay, this.closeAll);
         }
 

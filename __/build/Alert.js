@@ -32,7 +32,7 @@ var Alert = React.createClass({
   },
   render: function render() {
     return /*#__PURE__*/React.createElement("div", {
-      className: znui.react.classname('zr-popup-alert', this.props.className),
+      className: znui.react.classname('zr-popup-alert alert-in', this.props.className),
       style: this.props.style
     }, /*#__PURE__*/React.createElement("div", {
       className: "alert-inner"
