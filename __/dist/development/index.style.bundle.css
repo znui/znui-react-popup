@@ -357,6 +357,7 @@
 }
 .zr-popup-dialog .dialog-body {
   padding: 10px;
+  overflow: auto;
   /*overflow: auto;*/
 }
 .zr-popup-dialog.fixed {
@@ -914,7 +915,8 @@
 }
 .zr-popup-popover > .popover-content {
   height: 100%;
-  overflow: scroll;
+  max-height: 480px;
+  overflow: auto;
 }
 .zr-popup-popover.popover-in {
   animation: popoverIn 0.4s;
