@@ -34,16 +34,24 @@ var Dialog = React.createClass({
 			</span>;
 		}
 	},
+	__headerRender: function (){ 
+		if(this.props.header){
+			return znui.react.createReactElement(this.props.header, this.props);
+		}
+		return (
+			<div className="dialog-header">
+				{this.props.title && <div className="dialog-title">{this.props.title}</div>}
+				<div className="btns">
+					{this.props.fullscreen && this.__renderFullscreen()}
+					{this.props.closeable && <span onClick={this.__onClose} className="dialog-close">x</span>}
+				</div>
+			</div>
+		);
+	},
 	render: function(){
 		return (
 			<div className={znui.react.classname('zr-popup-dialog dialog-in', this.props.className, this.props.autoWidth?'auto-width':'min-width')} style={this.props.style} data-focus={this.props.focus} data-fullscreen={this.state.fullscreen} >
-				<div className="dialog-header">
-					{this.props.title && <div className="dialog-title">{this.props.title}</div>}
-					<div className="btns">
-						{this.props.fullscreen && this.__renderFullscreen()}
-						{this.props.closeable && <span onClick={this.__onClose} className="dialog-close">x</span>}
-					</div>
-				</div>
+				{this.__headerRender()}
 				<div className={znui.react.classname("dialog-body", this.props.contentClassName)} style={this.props.contentStyle}>
 					{this.props.content}
 				</div>

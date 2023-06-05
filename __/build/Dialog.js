@@ -77,13 +77,12 @@ var Dialog = React.createClass({
       })));
     }
   },
-  render: function render() {
+  __headerRender: function __headerRender() {
+    if (this.props.header) {
+      return znui.react.createReactElement(this.props.header, this.props);
+    }
+
     return /*#__PURE__*/React.createElement("div", {
-      className: znui.react.classname('zr-popup-dialog dialog-in', this.props.className, this.props.autoWidth ? 'auto-width' : 'min-width'),
-      style: this.props.style,
-      "data-focus": this.props.focus,
-      "data-fullscreen": this.state.fullscreen
-    }, /*#__PURE__*/React.createElement("div", {
       className: "dialog-header"
     }, this.props.title && /*#__PURE__*/React.createElement("div", {
       className: "dialog-title"
@@ -92,7 +91,15 @@ var Dialog = React.createClass({
     }, this.props.fullscreen && this.__renderFullscreen(), this.props.closeable && /*#__PURE__*/React.createElement("span", {
       onClick: this.__onClose,
       className: "dialog-close"
-    }, "x"))), /*#__PURE__*/React.createElement("div", {
+    }, "x")));
+  },
+  render: function render() {
+    return /*#__PURE__*/React.createElement("div", {
+      className: znui.react.classname('zr-popup-dialog dialog-in', this.props.className, this.props.autoWidth ? 'auto-width' : 'min-width'),
+      style: this.props.style,
+      "data-focus": this.props.focus,
+      "data-fullscreen": this.state.fullscreen
+    }, this.__headerRender(), /*#__PURE__*/React.createElement("div", {
       className: znui.react.classname("dialog-body", this.props.contentClassName),
       style: this.props.contentStyle
     }, this.props.content));
